@@ -12,7 +12,7 @@
 	\maketitle
 	
 	\begin{abstract}
-		This is done later.
+		This needs to be done.
 	\end{abstract}
 	
 	\tableofcontents
@@ -25,16 +25,27 @@ who performs a request and a server who sends the response, the latter does not 
 clear differentiation. Even recently a new communication protocol\cite{web-socket} has been published 
 in which the browser acts like a server, thus listening for requests. \\
  
-Probably one of the most challenging aspects are constant changes.%TO BE CONTINUED% 
-Due to the importance of this characteristic a whole section in this thesis outlines the challenges faced
-with changing environments. 
+Probably one of the most challenging aspects are constant changes. P.J.Warren, C.Boldyreff, M.Munro \cite{html-evolution}
+presented a study which analyzed six webstites. Their study shows a correlation between the complexity and the changes of
+a website: The more complex a website get the more likely they will change in the future. 
+There are structural and behavioral changes. While the former means changes in the document structure (e.g. Document Object Model\cite{dom} or HTML tree), the latter
+includes all changes affecting how Web applications response when an action is performed. 
+This requires adaptive testing techniques. Due to the importance of this characteristic a whole section in this thesis outlines the challenges faced
+with changing environments.\\ 
 
+Another important aspect is the huge user population. While in the beginnings of the World Wide Web only universities had access,
+nowadays the vast majority of the population can view content distributed across all over the world. The typical Web user range from a
+mother who does an online shopping tour over a teenager updating the current relationship status in Facebook to a student doing reseach for
+the Bachelor thesis. The integration of designers understanding these different social backgrounds of users is crucial. \\
 
 
 All of the above characteristics of Web applications make functional testing a difficult task though not impossible.
 This thesis first gives an overview of the different testing approaches with focus on Data-driven approach. For each 
 testing method a tool implementing it will be presented. 
 %TO BE CONTINUED - more words here%
+
+
+\section{Data-driven testing}
 
 
 \end{document}
