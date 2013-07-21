@@ -43,8 +43,8 @@ the Bachelor thesis. The integration of designers understanding these different 
 
 All of the above characteristics of Web applications make functional testing a difficult task though not impossible.
 This thesis first gives an overview of the different testing approaches with focus on Data-driven approach. For each 
-testing method a tool implementing it will be presented. 
-%TO BE CONTINUED - Brief outline of the contents%
+testing method a tool implementing it will be presented.\\
+-TODO Brief outline of the contents-
 \newpage
 
 \setcounter{page}{1}
@@ -54,7 +54,8 @@ According to that one might conclude that finding bugs is the only purpose of so
 another definition coexist: "Software testing is the process of verifying the programs output against predefined values". Besides from 
 these IEEE\cite{ieee-testing-definiton} defines software testing as: "The process of operating a system or component under specified conditions, observing or recording the results, and making an evaluation of some aspect of the system or component".\\
 \subsection{Testing Techniques}
-This section outlines the different software testing techniques\cite{softare-testing-principles}. %TODO more intro
+This section outlines the different software testing techniques\cite{testing-methods} and briefly describes testing methods representing each of
+the mentioned techniques in context of Web application testing.
 \paragraph{Black-Box Testing} ~\\
 This testing technique looks at the code which needs to be tested as a whole. It requires no internal knowledge though test cases are typically 
 derived from functional requirements. Therefore some sort of input data is verified against generated outcome.
@@ -65,10 +66,25 @@ sequence of 9161328320 combinations needs to be generated.
 In contrast this technique examines the internals such as code, code structure and control flow. White-Box Testing can be further classified in
 static and structural testing. The former does not require executing the code thus the source code is sufficient for examination. The source code
 is analyzed either by humans through a code review or by static analysis tools which check for unreachable code, unused variables, memory leaks, use
-deprecated libraries and other metrics. The latter executes the program and use the control structure for coverage examination\cite{structural-testing}.
+deprecated libraries and other metrics. The latter executes the program and use the control structure for coverage examination\cite{structural-testing}.\\
+-TODO detail description and explanation of \cite{web-whiteBox-testing}-
+\paragraph{Grey-Box Testing} ~\\
+To clarify the naming conflict, the two terms Grey-Box Testing and Gray-Box Testing are used synonymously in the literature\cite{bridge-grey}. 
+In the context of Web applications this new testing technique arises\cite{web-engineering}. Grey-Box Testing is a mixture of Black-Box and White-Box Testing as Grey-Box Testing (Black box + White box = Grey Box).\\
+One candidate representing this testing technique is \textit{User-Session based testing}. Though the behavior of Web application is examined like in
+Black-Box Testing it requires some internal knowledge (e.g. links to other pages) due to it verifies page or link coverage.\\
+-TODO detail description and explanation of \cite{user-session}-
+\subsection{Testing Levels}
+TODO see \cite{sw-testing-quality-assurance}
+\paragraph{Unit Testing} ~\\
+Text...
+\paragraph{Integration Testing} ~\\
+Text...
+\paragraph{System Testing} ~\\
+Text...
 
+\section{Test Automation}
 \subsection{Why Test Automation?}
-
 \subsection{Test Automation Frameworks}
 
 \bibliography{literature}
