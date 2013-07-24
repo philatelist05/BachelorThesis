@@ -84,6 +84,7 @@ One candidate representing this testing technique is \textit{User-Session based 
 Black-Box Testing it requires some internal knowledge (e.g. links to other pages) due to it verifies page or link coverage.\\
 -TODO detail description and explanation of \cite{user-session}-
 \subsection{Testing Levels}
+Testing Levels no different than in traditional software applications. TODO
 TODO see \cite{sw-testing-quality-assurance}
 \paragraph{Unit Testing} ~\\
 IEEE defines Unit Testing as\cite{unit-testing-definition} "testing of individual units or groups of related units". In \cite{sw-testing-quality-assurance}
@@ -118,7 +119,36 @@ It can be summarized that Unit testing is an important technique ensuring softwa
 should run in isolation. 
 
 \paragraph{Integration Testing} ~\\
-Text...
+As Web applications consists of multiple components there is a need for strategies to combine them. Integration testing is defined as\cite{sw-testing-quality-assurance} "testing the interaction between the modules and interaction with other systems externally". IEEE defines
+\textit{integration} as "the process of combining software components, hardware components, or both into an overall system" and \textit{Integration testing} as 
+"Testing in which software components, hardware components, or both are combined and tested to evaluate the interaction between them".\\
+Integration testing is different depending on the chosen integration strategy. The list below summarizes the main software integration strategies\cite{schattenbest}:\\
+\begin{itemize}
+	\item \textbf{Big-Bang integration}\\
+	IEEE defines it as\cite{big-bang-definition} "A type of integration [testing] in which software elements, hardware elements, or both are combined all at once into an overall system, rather than in stages". These strategy is the simplest and the most obvious though software system are rarely integrated following this approach. It assumes that all integrated software components work well together and all possibilities are taken into account from the beginning. This is of course
+unrealistic in today's software applications as dozens of developers work on the same application having more and more dependencies to legacy code. 
+	\item \textbf{Continuous integration}\\
+	This is probably one of the most popular strategies nowadays. Even small software pieces are integrated continuously. Depending on the 
+	size and complexity components are integrated daily (\textit{daily build}), weekly (\textit{weekly build}) or monthly (\textit{monthly build}). 
+	Sooner or later as the project progresses one problem arises: What to do if a component can not be integrated because it depends on an unimplemented 
+	piece of code? A solution would be to simulate the unimplemented component. This is similar to the concept of \textit{mock objects} mentioned earlier 
+	except the object need to provide at least a minimal implementation or even better a fake implementation. If this is not possible another type of integration 
+	strategy needs to be chosen locally even though the global continuous integration strategy remains. 
+	\item \textbf{Top-down integration}\\
+	Software components are integrated from top to bottom. A typical (Web) application consists of three or more layers. Integration starting at the topmost layer
+	provides an overview of the whole system even early in the development process. The drawback of this strategy is the simulation of bottom layers with the risk
+	of false expectations. Fortunately not all components depend on pieces of code in lower layers. These components are often called
+	\textit{sub-system}\cite{sw-testing-quality-assurance}. Sub-systems work isolated from the rest of the components. 
+	\item \textbf{Bottom-up integration}\\
+	It is basically the opposite of the above. Components residing at the lower layer are integrated before those at higher layers. 
+	It doe not require any simulation because all components are defined from ground up. Users interact with an application through the graphical user
+	interface residing at the topmost layer which will be implemented late, thus users can interact with the application at the end of the development phase. 
+	We recommend developing a demo application (e.g. \textit{prototype}) providing a first impression of the whole system.
+	\item \textbf{Bi-directional integration}\cite{sw-testing-quality-assurance}\\
+	This approach, also known as \textit{Build integration}\cite{schattenbest}, combines both Top-down and Bottom-up integration. 
+	Individual components are grouped into categories. First components in each category are integrated bottom-up leaving the topmost layer.
+	Then all remaining components are integrated top-down.
+\end{itemize}
 \paragraph{System Testing} ~\\
 Text...
 
