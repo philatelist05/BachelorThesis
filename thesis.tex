@@ -174,7 +174,40 @@ Therefore time consuming log running tasks should be done manually by someone el
 While the former might seem outdated in some areas there are still manual testing techniques which can not be replaced by automation.
 One the other hand test automation tools gain increasing importance.\\
 This section first compares the advantages and disadvantages of test automation and compares the different kinds of test automation frameworks.
-\subsection{Why Test Automation?}
+\subsection{Pitfalls of Test Automation}
+Possible pitfalls and misconceptions of test automation are listed below\cite{test-automation-success}.
+\begin{itemize}
+	\item \textbf{Automated testing completely replaces manual testing.}\\
+	Often people who do not understand testing or even testers and test managers who should agree on this statement. Another related misconception 
+	is to automate all tests. B. Marick\cite{testing-mistakes} differences 2 economic facts regarding automation versus manual testing:
+	"If an automated test costs a certain amount of money, it will cost almost nothing to run from then on." and
+	"If a manual test costs a certain amount of money to run the first time, it will cost just about the same as first time to run each time thereafter."
+	These two statements conclude that complex automated testing should be done manually for economic reasons.
+	However \cite{test-automation-success} lists some guidelines whether tests should be automated or not: Tests running on every build,
+	testing on many different platforms and the same setup procedures for a lot of different tests. \\
+	Another, yet more significant, reason is that the only way the evaluate automated tests by manual reviews. This is a variant of the well known
+	chicken egg problem. In order to test the quality of automated tests meta test cases are required which again require additional test cases and so on.
+	\item \textbf{The Pesticide Paradox}\\
+	S. Desikan and G. Ramesh\cite{softare-testing-principles} compare writing software test cases with "designing the right pesticides to catch and kill the pests".
+	It means that developers writing code get used to automated test cases and develop \textit{just for} passing the test but test cases never cover one hundred 
+	percent of all possible execution paths. 
+	\item \textbf{Independence}\\
+	Probably every developer knows that Unit test should run independent from each other. Fortunately these tests usually have low coupling, requiring minimal
+	overhead to set up. But \textit{all} kinds of tests should run in isolation, thus not affecting the outcome of other tests.
+	This is extremely challenging especially for coarse grained tests like functional Web application tests. However some test cases logically depend on each other.
+	We chose a simple Website offering online shopping functionality. One test case verifies the correct authentication behavior for an arbitrary user and
+	another evaluates the correct computation of the total price if a customer adds items to the shopping cart.
+	Clearly the latter is only possible after successful authentication, thus the result of the former test case determines the result of the latter.
+	Nevertheless testing needs to done independently. Therefore we recommend an isolated test environment as close as possible the production environment
+	as a best practice.
+	\item \textbf{Repeatability}\\
+	At least as important as the above aspect is if tests executed repeatedly produce the same outcome in a stable environment. One possible 
+	indicator of different outcomes are misused threading. As threads can lead to unpredictable behavior they should be avoided where possible. 
+	If this is undesirable synchronization techniques help to reduce the risk of deadlocks and race conditions. 
+	Another cause may be misused random data. If some application requires initialization with random data like playing dice, either using constant data
+	or pre-generating the random data helps to predict the outcome. 
+\end{itemize}
+
 \subsection{Test Automation Frameworks}
 
 \newpage
