@@ -59,7 +59,7 @@ testing method a tool implementing it will be presented.\\
 \cite{art-of-software-testing} defines software testing as "the process of executing a program with the intent of finding errors".
 According to that one might conclude that finding bugs is the only purpose of software testing. Since TDD\cite{tdd} became popular
 another definition coexist: "Software testing is the process of verifying the programs output against predefined values". Besides from 
-these IEEE\cite{ieee-testing-definiton} defines software testing as: "The process of operating a system or component under specified conditions, observing or recording the results, and making an evaluation of some aspect of the system or component".\\
+these IEEE\cite{ieee-definition} defines software testing as: "The process of operating a system or component under specified conditions, observing or recording the results, and making an evaluation of some aspect of the system or component".\\
 \subsection{Testing Techniques}
 This section outlines the different software testing techniques\cite{testing-methods} and briefly describes testing methods representing each of
 the mentioned techniques in context of Web application testing.
@@ -87,7 +87,7 @@ Black-Box Testing it requires some internal knowledge (e.g. links to other pages
 Testing Levels no different than in traditional software applications. TODO
 TODO see \cite{sw-testing-quality-assurance}
 \paragraph{Unit Testing} ~\\
-IEEE defines Unit Testing as\cite{unit-testing-definition} "testing of individual units or groups of related units". In \cite{sw-testing-quality-assurance}
+IEEE defines Unit Testing as\cite{ieee-definition} "testing of individual units or groups of related units". In \cite{sw-testing-quality-assurance}
 a unit "is the smallest possible testable software component". Another, yet more practical definition is\cite{practical-unit-testing-definition}:
 A unit test is "a test, executed by the developer in a laboratory environment, that should demonstrate that the program meets the requirements set in the design specification". Though these definition clearly clarify what unit testing is in general, often there are misunderstandings. \cite{unit-testing-survey} conclude
 before the specification of Unit tests a company should determine the granularity of units and what needs to be tested.
@@ -120,12 +120,12 @@ should run in isolation.
 
 \paragraph{Integration Testing} ~\\
 As Web applications consists of multiple components there is a need for strategies to combine them. Integration testing is defined as\cite{sw-testing-quality-assurance} "testing the interaction between the modules and interaction with other systems externally". IEEE defines
-\textit{integration} as "the process of combining software components, hardware components, or both into an overall system" and \textit{Integration testing} as 
+\textit{integration} as\cite{ieee-definition} "the process of combining software components, hardware components, or both into an overall system" and \textit{Integration testing} as\cite{ieee-definition} 
 "Testing in which software components, hardware components, or both are combined and tested to evaluate the interaction between them".\\
 Integration testing is different depending on the chosen integration strategy. The list below summarizes the main software integration strategies\cite{schattenbest}:\\
 \begin{itemize}
 	\item \textbf{Big-Bang integration}\\
-	IEEE defines it as\cite{big-bang-definition} "A type of integration [testing] in which software elements, hardware elements, or both are combined all at once into an overall system, rather than in stages". These strategy is the simplest and the most obvious though software system are rarely integrated following this approach. It assumes that all integrated software components work well together and all possibilities are taken into account from the beginning. This is of course
+	IEEE defines it as\cite{ieee-definition} "A type of integration [testing] in which software elements, hardware elements, or both are combined all at once into an overall system, rather than in stages". These strategy is the simplest and the most obvious though software system are rarely integrated following this approach. It assumes that all integrated software components work well together and all possibilities are taken into account from the beginning. This is of course
 unrealistic in today's software applications as dozens of developers work on the same application having more and more dependencies to legacy code. 
 	\item \textbf{Continuous integration}\\
 	This is probably one of the most popular strategies nowadays. Even small software pieces are integrated continuously. Depending on the 
@@ -150,14 +150,31 @@ unrealistic in today's software applications as dozens of developers work on the
 	Then all remaining components are integrated top-down.
 \end{itemize}
 \paragraph{System Testing} ~\\
-Text...
-
+IEEE defines \textit{System testing} as\cite{ieee-definition} "testing conducted on a complete, integrated system to evaluate the system's compliance with its specified requirements". As the whole application is finished System testing begins. It aims as evaluating the system against initial requirements.
+Depending on the type of requirement either test cases implementing \textit{functional} or \textit{non-functional} requirements are executed as they are defined during the requirement-gathering phase. 
+\begin{itemize}
+	\item \textbf{Functional testing}\\
+	IEEE's defines Functional testing as \cite{ieee-definition}
+	"Testing conducted to evaluate the compliance of a system or component with specified functional requirements". Thus functional tests ensure
+	the correct functioning or behavior of the whole system and they are typically of type black-box.
+	They focus on evaluating the outcome against predefined expectations. Functional testing of Web applications is hard due to the
+	reasons mentioned in the introduction. This is the reason why there is no tool ultimate tool satisfying all needs and no best practice, though are many
+	tools implementing different approaches.
+	\item \textbf{Non-functional testing}\\
+	There are several approaches implementing this kind of testing. One are performance tests. Since the well known publication of Gordon E. Moore back in 
+	1965\cite{moore} which says that the number of integrated circuits will at least double every year computation power indeed highly increased.
+	However performance tests are still important due to the increasing complexity and feature richness of todays applications. Another non-functional 
+	testing approach is security testing. Though the Open Web Application Security Project, abbreviated OWASP\cite{owasp}, published the list of the top ten
+	Web security threats, the number of exploits listed in the Metasploit Database\cite{metasploit} still rises. Thus security testing is crucial for the success
+	of a software company. Apart from the above there are other approaches which would exceed the scope of this thesis. 
+\end{itemize}
 \section{Test Automation}
 Most of the time developers spend time reading other's code. In the remaining time they write code, chat with colleagues or do other things.
 Therefore time consuming log running tasks should be done manually by someone else or automated. 
 \subsection{Why Test Automation?}
 \subsection{Test Automation Frameworks}
 
+\newpage
 \bibliography{literature}
 \bibliographystyle{plain}
 \end{document}
