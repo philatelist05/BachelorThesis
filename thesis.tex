@@ -214,7 +214,35 @@ Another important aspect ensuring successful automated tests is documentation in
 documenting steps necessary for running the test cases, manual test result review in case of partial automated tests and what part of the software is not
 tested and why. 
 \subsection{Test Automation Frameworks}
+As the World Wide Web attracted more and more people there has been a growing need for automated evaluation of Web applications. Companies are willing to
+invest a lot for a powerful automation tool. All the above approaches have the term \textit{framework} in common. R. Johnson and B. Foote define it
+in the context of Object Oriented Programming as\cite{oop}
+"a set of classes that embodies an abstract design for solutions to a family of related problems, and supports reuses at a larger granularity than classes".
+This definition can also be applied to automated testing where the term \textit{Test Automation Framework} seems appropriate.\\
+E. Kit\cite{kit} distinguishes three generations of automation tools:
+\begin{enumerate}
+	\item The most basic tools use the \textit{Capture and Playback} approach. It works as a one needs to manually perform all steps necessary for evaluation which
+	are subsequently recorded for replaying, hence the word \textit{replay} is often used synonymously.
+	These tools have one major drawback in common as high maintenance costs\cite{record-playback}. Once everything is recorded there is no guarantee that all
+	test cases do not break in the future though all work now. Another yet more problematic disadvantage are hard-coded data in the tool generated
+	scripting language. This should be avoided in any programming language\cite{automation-principles}. 
+	The last problem during playback is synchronization issues due to the distributed nature of Web applications. Obviously it takes some time for the browser to
+	fetch a Website. In order to function correctly the tool implementing capture and playback needs to properly guess the delay after the server has sent a Website.
+	Of course no tool is able to predict the future thus (over-)estimating the delay or requiring the programmer to explicitly put synchronization points
+	into the generated script. Both solutions are cumbersome and hard.
+	\item Second generation Capture and Playback tools have lessons learned. Instead of a single capture phase tools require writing scripting code. Vendors 
+	equip their tools with a full blown scripted language which brings all the advantages of a modern programming language like code-reuse, conditional execution and
+	error recovery to name a few. However treating automation as a software engineering task requires additional domain experts having scripting knowledge.
+	\item Tools from the above two generations generate a single script for all test cases. Third generation Capture and Playback tools use many small scripts each 
+	responsible for a single test case. It further extracts hard-coded data out of the scripts leading to a new era of frameworks called
+	\textit{Data-driven Frameworks}. 
+\end{enumerate} 
+\paragraph{Data-driven Frameworks} ~\\
 
+\paragraph{Model-driven Frameworks} ~\\
+Text...
+\paragraph{Other Frameworks} ~\\
+Text...
 \newpage
 \bibliography{literature}
 \bibliographystyle{plain}
