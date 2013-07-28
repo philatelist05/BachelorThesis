@@ -4,9 +4,33 @@
 \usepackage[english]{babel}
 \usepackage{tocloft}
 \usepackage{setspace}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{listings}
+\usepackage{float}
+\usepackage{tabularx}
 
 \setcounter{tocdepth}{4}
 \cftsetindents{paragraph}{1cm}{0cm}
+
+\lstset{ %
+  basicstyle=\footnotesize,        % the size of the fonts that are used for the code
+  breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
+  breaklines=true,                 % sets automatic line breaking
+  captionpos=b,                    % sets the caption-position to bottom
+  deletekeywords={...},            % if you want to delete keywords from the given language
+  escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+  extendedchars=true,              % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
+  keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
+  morekeywords={*,...},            % if you want to add more keywords to the set
+  showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
+  showstringspaces=false,          % underline spaces within strings only
+  showtabs=false,                  % show tabs within strings adding particular underscores
+  tabsize=4,                       % sets default tabsize to 2 spaces
+  title=\lstname                   % show the filename of files included with \lstinputlisting; also try caption instead of title
+}
+
 
 \title{Functional Testing of Web Applications}
 \author{Stefan Gamerith\\\\
@@ -273,8 +297,57 @@ changes such as News sites. Whereas on the fronted side news seem to be updates 
 CMS systems ease the development of high adaptive Web applications, though requiring more sophisticated testing approaches. This section gives a brief overview 
 of different approaches satisfying this requirement. 
 \subsection{Robust XPath}
-
-\subsection{Maximum Tree Matching}
+M. Abe and M. Hori proposed an approach\cite{robust-xpath} of stable XPath\cite{xpath} expressions, resisting structural changes.
+XPath expressions ease the navigation through hierarchical content such as XML\cite{xml}, (X)HTML\cite{html}, DOM\cite{dom} and any other tree-like structure.
+XPath defines several navigation axes though they all can be categorized as forward axes and reverse axes. While the former navigates downwards,
+the latter navigates upwards. Web applications test tools use XPath expressions for the identification of nodes. While in principle these tools can deal with HTML
+nodes and DOM nodes, we recommend using tools working with the latter thus offering the possibility to navigate through dynamic content. 
+However tools often produce XPath expressions which break after slightly changing document structure. \\
+M. Abe and M. Hori identified three types of XPath expressions: \textit{single-node pointing}, \textit{alternative predicate} and \textit{relative addressing}. 
+Single-node pointing expressions identify, as the name suggests, exactly one single node. It will not point to any other nodes, Alternative predicate expressions
+use a predicate expression to limit the number of result nodes. They do not necessarily have to return a single node, instead returning a set of nodes.
+Relative addressing expressions use an fixed anchor node which will not change frequently.\\
+An example of a simple html code is given in listing  \ref{lst:html}.
+\begin{lstlisting}[language=HTML, caption={HTML code listing used as source for XPath expressions},label=lst:html]
+<html>
+	<body>
+		<div>
+			<label>Audi</label>
+			<a href="http://www.audi.at"></a>
+			<div>Perfect!</div>
+		</div>
+		<div>
+			<label>VW</label>
+			<a href="http://www.volkswagen.at"></a>
+			<div>Perfect!</div>
+		</div>
+		<div>
+			<label>Seat</label>
+			<a href="http://www.seat.at"></a>
+		</div>
+	</body>
+</html>
+\end{lstlisting}
+\vspace{1cm}
+Table \ref{tab:xPath-expressions} shows an example for each type of XPath expression.
+\begin{table}[H]
+	\begin{tabularx}{\textwidth}{l|X}
+		\textbf{Type} & \textbf{Expression} \\
+		\hline
+		single-node positioning & \texttt{/html[1]/body[1]/div[1]/label} \\
+		single-node positioning & \texttt{/descendant::label[1]} \\
+		alternative predicate & \texttt{//a[@href='http://www.volkswagen.at']} \\
+		relative addressing & \texttt{//a[@href='http://www.volkswagen.at']/ ancestor::label[1]} \\
+	\end{tabularx}
+	\caption{Illustration of the three different types of XPath expressions}
+	\label{tab:xPath-expressions}
+\end{table}
+The most promising approach is relative addressing if a link node is used an anchor because M. Abe and M. Hori observed that links are unlikely to change. 
+Though some Websites heavily rely on numeric links as \texttt{http://orf.at/stories/2192632/} which change after a short period of time. Here URL rewriting 
+is used to create human readable, bookmarkable links. Another problem are links with different link text though linking to the same page. Sometimes links are written with leading \texttt{http://} and other times not. However a slightly modified XPath expression solves the problem, e.g.
+\texttt{//a[contains(./@href, www.volkswagen.at)]} instead of \texttt{//a[@href='http://www.volkswagen.at']}.\\
+Robust XPath expressions are simple, yet effective surviving structural changes, however the authors noted that their empirical study was to small and the XPath expressions were tightly coupled to the provided HTML document in order to generalize their conclusions to all kinds of HTML documents.  
+\subsection{Tree Similarity}
 
 \subsection{Other Approaches}
 
