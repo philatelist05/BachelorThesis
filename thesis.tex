@@ -2,6 +2,11 @@
 \usepackage[margin=4cm]{geometry}
 \usepackage{hyperref}
 \usepackage[english]{babel}
+\usepackage{tocloft}
+\usepackage{setspace}
+
+\setcounter{tocdepth}{4}
+\cftsetindents{paragraph}{1cm}{0cm}
 
 \title{Functional Testing of Web Applications}
 \author{Stefan Gamerith\\\\
@@ -17,7 +22,9 @@
 	\end{abstract}
 	\newpage
 	\thispagestyle{empty}
+	\onehalfspacing
 	\tableofcontents
+	\singlespacing
 \newpage
 \setcounter{page}{1}
 
@@ -238,11 +245,39 @@ E. Kit\cite{kit} distinguishes three generations of automation tools:
 	\textit{Data-driven Frameworks}. 
 \end{enumerate} 
 \paragraph{Data-driven Frameworks} ~\\
-
+The basic concept of Data-driven Automation Frameworks is a separation between the behavioral instructions and the data used as parameter for each test case. 
+As \cite{record-playback} stated parameters are usually kept in separated files organized as a grid. There is no limitation about the actual data format though
+for usability reasons using spreadsheet readable formats is recommended as xsl-files. Even though the concept of Data-driven Automation Frameworks is not application specific until today only tools testing GUI and Web applications can be found. In the remainder of this paragraph a popular Data-driven Automation
+tool namely \textit{Selenium}\cite{selenium} specifically designed for Web application testing is presented.\\
+Selenium was originally developed by Jason R. Huggins working on a new time tracking system for ThoughtWorks back in 2004\cite{shortcut-selenium}.
+At that time client-side Javascript code was a nightmare to test due to the different browser implementations. Almost a decade later it is still one of 
+the most challenging tasks. Basically Selenium includes two different open source tools: \textit{Selenium IDE} and \textit{Selenium 2}. 
+The former provide testing novices the ability to get used to how tests are recorded and the scripting environment. It currently runs on Mozilla Firefox only thus
+shipping as a Firefox extension. The recommended way of using Selenium is through the latter tool which is the successor of Selenium 1. Developers spent a lot of
+effort in backward compatibility however is it of advantage to upgrade old Selenium 1 tests. \\\\
+-TODO: further explanation and examples-\\\\
+Due to the following major drawback the use of tools following a Data-driven approach is not recommended for commercial applications. The reason for this
+is scalability. To understand this problem the internals of a tool following a Data-driven approach need to be examined. Each row in a data-grid represents exaclty 
+a single test case. The implementation of the latter is done either automatically by recording user interactions or specified manually.
+In either way as more applications code needs to be tested new test cases generated in one of the above ways are required. 
+This leads to the conclusion that the number of lines of automation code is \textit{proportional} to the number of tests\cite{record-playback} which is generally 
+undesirable. 
 \paragraph{Model-driven Frameworks} ~\\
 Text...
 \paragraph{Other Frameworks} ~\\
 Text...
+
+\section{Resilience and Adaptiveness}
+One of the main challenges in Web application testing are changing Webpages. There are even categories of Websites which were build with the intention of regular
+changes such as News sites. Whereas on the fronted side news seem to be updates in real time, news sites are usually realized using a Content Management System. 
+CMS systems ease the development of high adaptive Web applications, though requiring more sophisticated testing approaches. This section gives a brief overview 
+of different approaches satisfying this requirement. 
+\subsection{Robust XPath}
+
+\subsection{Maximum Tree Matching}
+
+\subsection{Other Approaches}
+
 \newpage
 \bibliography{literature}
 \bibliographystyle{plain}
