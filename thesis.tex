@@ -287,7 +287,36 @@ In either way as more applications code needs to be tested new test cases genera
 This leads to the conclusion that the number of lines of automation code is \textit{proportional} to the number of tests\cite{record-playback} which is generally 
 undesirable. 
 \paragraph{Model-driven Frameworks} ~\\
-Text...
+Model-driven Frameworks take a fundamentally different approach. They verify the correctness of a system using a technique called \textit{model checking}.
+E. M. Clarke \textit{et al.}\cite{model-checking} defines model checking as "an automatic technique for verifying finite state [concurrent] systems".
+The term \textit{finite state} typically refers to the concept of Finite State Machines(FSM)\cite{finite-state-machines} which is graphically represented by a directed graph where nodes make up the states. Changes from one state to another are called transitions. A FSM must have by definition exactly one start (entry) state and one or more end states.  In Model Checking a finite state model \textit{M} is limited by a constraint expressed as a logical formula \textit{f} where
+following condition is checked: \textit{M} satisfies \textit{f}. A logical formula \textit{f} is composed of atomic propositions and booleans
+expressions\cite{model-checking}. Researchers have spent a lot of effort in several temporal logic formalisms. The two most important ones are
+\textit{computation tree logic(CTL)} and \textit{linear temporal logic} though for the purpose of model checking in the context of Model-driven Frameworks simpler
+ones are sufficient\cite{dynamic-testing-web-applications}. \\
+F. Ricca and P. Tonella proposed in their paper\cite{web-whiteBox-testing} one of the first model checking approaches. They introduced a
+meta model (\textit{navigational model}) describing the general Web application structure which is given in the Unified Modeling Language (UML)\cite{uml}.
+A navigational model shows the connections (\textit{links}) between Webpages, navigation constraints realized as key-value pairs and static and dynamic Webpages. 
+Whereas the content of the former never changes, the content of the latter is computed dynamically at runtime using input parameters. Then a test case is
+"a sequence of pages to be visited plus the input values to be provided to pages containing forms"\cite{web-whiteBox-testing}. Although the primary research focus
+lies on \textit{path coverage} (e.g. verifying that a path is visited), their approach promises further testing criteria: All-paths testing, All-uses testing,
+Hyperlink testing, Page testing and Defintion-use testing. As automatic test case generation scheme an algorithm is proposed which generates test cases for the above mentioned criteria, though it requires manual involvement for path coverage. Due to the latter factor and the growing number of rich client applications having a
+single dynamic Webpage, more dynamic approaches have been explored.\\
+H. Tanida et al.\cite{dynamic-testing-web-applications} extended the above approach to AJAX Web applications. In order to build a navigational model all 
+application states need to be explored. Although they used the tool \textsc{Crawlajax}\cite{crawlajax} for exploring applications states, manual
+crawling (\textit{guided crawling}) is still necessary to explore all application states. Automatic model generation is a time consuming and inefficient task. 
+Therefore different approaches such as hashcode computation, state compression, recursive indexing\cite{recursive-indexing}, delta update or Sweep
+Line\cite{sweep-line} have been taken into account in order to reduce state space\cite{state-space-reduction}. However \cite{dynamic-testing-web-applications}
+implemented a \textit{state abstraction} technique which simplifies removing all redundant states. A tool
+named \textsc{Goliath} accepts the generated navigation model and evaluates a set of expressions. Hence it operates on the DOM, it accepts XPath expressions like \texttt{doc.xpath('//a[@id="login"]').any?}. \\
+Although Testing Ajax applications through model checking seems most promising, A. Deursen and A. Mesbah\cite{research-issues-model-checking-ajax} explored
+a number of research questions, though their proposed model checker is quite different. Their model checker\cite{atusa} is based on \textit{invariants} which are
+different constraints concerning the user interface. However a number of open research questions remain:
+\begin{itemize}
+	\item What is the most promising approach for expressing user interface constraints?
+	\item Is it possible to construct a model of \textit{every} Ajax application?
+	\item Hence Javascript code is a script language, how does Javascript faults affect the model generation process?
+\end{itemize}
 \paragraph{Other Frameworks} ~\\
 Text...
 

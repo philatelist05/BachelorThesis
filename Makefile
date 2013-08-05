@@ -8,3 +8,6 @@ $(FILES):
 	pdflatex $@
 	pdflatex $@
 
+.PHONY: clean
+clean:
+	rm -rf $(FILES).aux $(FILES).bbl $(FILES).blg $(FILES).dvi $(FILES).log $(FILES).out $(FILES).toc $(FILES).pdf
