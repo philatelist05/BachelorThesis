@@ -377,6 +377,21 @@ is used to create human readable, bookmarkable links. Another problem are links 
 \texttt{//a[contains(./@href, www.volkswagen.at)]} instead of \texttt{//a[@href='http://www.volkswagen.at']}.\\
 Robust XPath expressions are simple, yet effective surviving structural changes, however the authors noted that their empirical study was to small and the XPath expressions were tightly coupled to the provided HTML document in order to generalize their conclusions to all kinds of HTML documents.  
 \subsection{Tree Similarity}
+Until recently there has been spent a lot of effort in algorithms all addressing Tree Similarity due to the different areas of application as string similarity for spell checkers,
+XML document analysis and text search algorithms to name just a few.
+\paragraph{Tree edit distance} ~\\
+Back in 1977 S. Selkow presented in his paper\cite{tree-editing-distance} an approach of measuring tree similarity. He observed that a tree can be transformed into another, similar tree 
+using three operations:
+\begin{itemize}
+	\item \textbf{Insert}\\
+	Insert a new child node at a certain position, substitute former child nodes with the node to be inserted and insert former child nodes as children of the new inserted node.  
+	\item \textbf{Delete}\\
+	Remove a node from a tree and connect it's children directly to it's parent node.
+	\item \textbf{Rename(Update)}\\
+	Change the label of a node preserving the overall structure of the tree.
+\end{itemize}
+The above informal definition implies that insert and delete are inverse edit operations (i.e., insert undoes delete and vice versa). Figure . illustrates all three operations. 
+% Figure
 
 \subsection{Other Approaches}
 
