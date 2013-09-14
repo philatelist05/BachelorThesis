@@ -61,7 +61,7 @@ clear differentiation. Even recently a new communication protocol\cite{web-socke
 in which the browser acts like a server, thus listening for requests. Tilley and Huang \cite{web-classification} proposed
 a new classification scheme for Web applications. They partition Web applications into three different categories:
 Class 1 are mainly static Web applications containing static content. Usually these are implemented as plain HTML sites. 
-Class 2 are Web applications with some sort of dynamic behavior. Dynamic content is realized witch technologies like Flash\cite{flash},
+Class 2 are Web applications with some sort of dynamic behaviour. Dynamic content is realized with technologies like Flash\cite{flash},
 embedded Java Applet\cite{java-applet}, Javascript or recently CSS3\cite{css3}. 
 Class 3 represents the most complex Web applications. In addition to Class 1 and 2 these provide dynamically generated content by server-side technologies
 like JSP, PHP, ASP and others. Nowadays most Web applications represent Class 3. Unfortunately developing these requires much more expertise, increasing the
@@ -69,9 +69,9 @@ likelihood of defects and often requiring much higher maintenance costs.\\
 Probably one of the most challenging aspects are constant changes. P.J.Warren, C.Boldyreff, M.Munro\cite{html-evolution}
 presented a study which analyzed six websites. Their study shows a correlation between the complexity and the changes of
 a website: The more complex a website get the more likely they will change in the future. 
-There are structural and behavioral changes. While the former means changes in the document structure (e.g. Document Object Model\cite{dom} or HTML tree), the latter
-includes all changes affecting how Web applications response when an action is performed. 
-This requires adaptive testing techniques. Due to the importance of this characteristic a whole section in this thesis outlines the challenges faced
+There are structural and behavioural changes. While the former means changes in the document structure (e.g. Document Object Model\cite{dom} or HTML tree), the latter
+includes all changes affecting how Web applications respond when an action is performed. 
+This requires adaptive testing techniques. Due to the importance of this characteristic, a whole section in this thesis outlines the challenges faced
 with changing environments.\\ 
 Another important aspect is the huge user population. While in the beginnings of the World Wide Web only universities had access,
 nowadays the vast majority of the population can view content distributed across all over the world. The typical Web user range from a
@@ -111,7 +111,7 @@ deprecated libraries and other metrics. The latter executes the program and use 
 \paragraph{Grey-Box Testing} ~\\
 To clarify the naming conflict, the two terms Grey-Box Testing and Gray-Box Testing are used synonymously in the literature\cite{bridge-grey}. 
 In the context of Web applications this new testing technique arises\cite{web-engineering}. Grey-Box Testing is a mixture of Black-Box and White-Box Testing as Grey-Box Testing (Black box + White box = Grey Box).\\
-One candidate representing this testing technique is \textit{User-Session based testing}. Though the behavior of Web application is examined like in
+One candidate representing this testing technique is \textit{User-Session based testing}. Though the behaviour of Web application is examined like in
 Black-Box Testing it requires some internal knowledge (e.g. links to other pages) due to it verifies page or link coverage.\\
 -TODO detail description and explanation of \cite{user-session}-
 \subsection{Testing Levels}
@@ -137,15 +137,15 @@ These questions help agreeing on Unit testing principles when developing in a te
 	be tested or not.
 \end{itemize}
 As we know what a Unit test is one important question arise: How to select Unit test cases? At one extreme test cases with one hundred percent statement coverage
-are surely too much. On the other hand no testing at all lead to undesirable behavior at least or even worst unrecoverable damage. 
+are surely too much. On the other hand no testing at all lead to undesirable behaviour at least or even worst unrecoverable damage. 
 As a rule of thumb only code causing state changes should be tested. For example testing a method returning only the state of an object or variable (e.g. getter/setter methods) is unnecessary, though they can be used in context with other computations. Unit testing frameworks 
 like JUnit\cite{junit} offer a special method dedicated especially for setting up the environment.\\
 Writing testable code affects the whole development process. It changes the design of classes fundamentally. One class should serve exactly one and only one purpose. Breaking this principle means high coupling, thus having a dependent class. Dependencies to other classes are not desirable because they introduce new
-side effects. In addition third party dependencies may lead to unpredictable or erroneous behavior because of blindly trusting foreign code.
+side effects. In addition third party dependencies may lead to unpredictable or erroneous behaviour because of blindly trusting foreign code.
 As a best practice third party dependencies should be kept in one single place. This has the advantage of testing third party code in isolation 
 and one single point of failure instead of many. However sometimes class level dependencies can not be removed.
 One solution T. Mackinnon, S. Freeman and P. Craig proposed\cite{mock-objects} is using mock objects instead of real ones. In the literature the terms \textit{mock object} and \textit{stub implementation} are often used synonymously though M. Fowler clearly differentiate\cite{fowlermocks} (together with similar confusing terms): A \textit{Mock object} is a object having the same interface as the real implementation. It can be initialized with state for further verification. 
-A \textit{Stubs} "provide canned answers to calls made during the test." It usually does provide some predefined behavior.\\ 
+A \textit{Stubs} "provide canned answers to calls made during the test." It usually does provide some predefined behaviour.\\ 
 It can be summarized that Unit testing is an important technique ensuring software quality. Due to the fine granularity of test cases they Unit tests 
 should run in isolation. 
 
@@ -194,7 +194,7 @@ Depending on the type of requirement either test cases implementing \textit{func
 	\item \textbf{Non-functional testing}\\
 	There are several approaches implementing this kind of testing. One are performance tests. Since the well known publication of Gordon E. Moore back in 
 	1965\cite{moore} which says that the number of integrated circuits will at least double every year computation power indeed highly increased.
-	However performance tests are still important due to the increasing complexity and feature richness of todays applications. Another non-functional 
+	However performance tests are still important due to the increasing complexity and feature richness of today’s applications. Another non-functional 
 	testing approach is security testing. Though the Open Web Application Security Project, abbreviated OWASP\cite{owasp}, published the list of the top ten
 	Web security threats, the number of exploits listed in the Metasploit Database\cite{metasploit} still rises. Thus security testing is crucial for the success
 	of a software company. Apart from the above there are other approaches which would exceed the scope of this thesis. 
@@ -226,7 +226,7 @@ Possible pitfalls and misconceptions of test automation are listed below\cite{te
 	Probably every developer knows that Unit test should run independent from each other. Fortunately these tests usually have low coupling, requiring minimal
 	overhead to set up. But \textit{all} kinds of tests should run in isolation, thus not affecting the outcome of other tests.
 	This is extremely challenging especially for coarse grained tests like functional Web application tests. However some test cases logically depend on each other.
-	We chose a simple Website offering online shopping functionality. One test case verifies the correct authentication behavior for an arbitrary user and
+	We chose a simple Website offering online shopping functionality. One test case verifies the correct authentication behaviour for an arbitrary user and
 	another evaluates the correct computation of the total price if a customer adds items to the shopping cart.
 	Clearly the latter is only possible after successful authentication, thus the result of the former test case determines the result of the latter.
 	Nevertheless testing needs to done independently. Therefore we recommend an isolated test environment as close as possible the production environment
@@ -269,7 +269,7 @@ E. Kit\cite{kit} distinguishes three generations of automation tools:
 	\textit{Data-driven Frameworks}. 
 \end{enumerate} 
 \paragraph{Data-driven Frameworks} ~\\
-The basic concept of Data-driven Automation Frameworks is a separation between the behavioral instructions and the data used as parameter for each test case. 
+The basic concept of Data-driven Automation Frameworks is a separation between the behavioural instructions and the data used as parameter for each test case. 
 As \cite{record-playback} stated parameters are usually kept in separated files organized as a grid. There is no limitation about the actual data format though
 for usability reasons using spreadsheet readable formats is recommended as xsl-files. Even though the concept of Data-driven Automation Frameworks is not application specific until today only tools testing GUI and Web applications can be found. In the remainder of this paragraph a popular Data-driven Automation
 tool namely \textit{Selenium}\cite{selenium} specifically designed for Web application testing is presented.\\
@@ -390,8 +390,33 @@ using three operations:
 	\item \textbf{Rename(Update)}\\
 	Change the label of a node preserving the overall structure of the tree.
 \end{itemize}
-The above informal definition implies that insert and delete are inverse edit operations (i.e., insert undoes delete and vice versa). Figure . illustrates all three operations. 
-% Figure
+The above informal definition implies that insert and delete are inverse edit operations (i.e., insert undoes delete and vice versa). Figure \ref{fig:tree_operations} illustrates all three operations (adapted from \cite{tree-edit-distance-survey}). 
+\begin{figure}[H]
+        \centering
+        \begin{subfigure}[h!]{0.3\textwidth}
+                \includegraphics[width=\textwidth]{tree_edit_distance1}
+                \caption{Source tree for all operations}
+        \end{subfigure}
+\\
+        \begin{subfigure}[h!]{0.3\textwidth}
+                \includegraphics[width=\textwidth]{tree_edit_distance2}
+                \caption{Tree after deletion of node \textit{c}}
+        \end{subfigure}
+\quad
+        \begin{subfigure}[h!]{0.3\textwidth}
+                \includegraphics[width=\textwidth]{tree_edit_distance3}
+                \caption{Tree after insertion of node \textit{g}}
+        \end{subfigure}
+\quad
+        \begin{subfigure}[h!]{0.3\textwidth}
+                \includegraphics[width=\textwidth]{tree_edit_distance4}
+                \caption{Tree after relabelling \textit{c} to \textit{a} and \textit{d} to \textit{f}}
+        \end{subfigure}
+        \caption{Illustration of tree-edit operations}\label{fig:tree_operations}
+\end{figure}
+The tree edit distance, formally defined as $\delta(T_1,T_2)$ whereas $T_1$ and $T_2$ are labelled trees,
+is the minimal number of operations necessary for transforming $T_1$ into $T_2$: min\{$\gamma(S)|S$ is a sequence of operations transforming $T_1$ into $T_2$\}. $\gamma(S)$ is a function measuring the cost of a sequence of operations $S=s_1,...,s_k$. \\
+Although a large number of algorithms have been developed in the past (e.g. Tai\cite{tai} introduced the first algorithm with non exponential time complexity), there are faster, yet more complex solutions. 
 
 \subsection{Other Approaches}
 

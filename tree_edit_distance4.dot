@@ -1,0 +1,9 @@
+graph {
+	f -- e;
+	f -- d1;
+	d1 -- a;
+	d1 -- c1;
+	c1 -- b;
+	d1[label="f"];
+	c1[label="a"];
+}
