@@ -10,6 +10,7 @@
 \usepackage{listings}
 \usepackage{float}
 \usepackage{tabularx}
+\usepackage[ruled,vlined]{algorithm2e}
 
 \setcounter{tocdepth}{4}
 \cftsetindents{paragraph}{1cm}{0cm}
@@ -416,8 +417,47 @@ The above informal definition implies that insert and delete are inverse edit op
 \end{figure}
 The tree edit distance, formally defined as $\delta(T_1,T_2)$ whereas $T_1$ and $T_2$ are labelled trees,
 is the minimal number of operations necessary for transforming $T_1$ into $T_2$: min\{$\gamma(S)|S$ is a sequence of operations transforming $T_1$ into $T_2$\}. $\gamma(S)$ is a function measuring the cost of a sequence of operations $S=s_1,...,s_k$. \\
-Although a large number of algorithms have been developed in the past (e.g. Tai\cite{tai} introduced the first algorithm with non exponential time complexity), there are faster, yet more complex solutions. 
+Although a large number of algorithms have been developed in the past (e.g. Tai\cite{tai} introduced the first algorithm with non exponential time complexity), there are faster, yet more complex solutions to the domain of tree similarity. 
 
+\paragraph{Longest common subsequence} ~\\
+Instead of viewing tree similarity as a sequence of operations, these paragraph introduces algorithms which are based on finding
+the the longest common subsequence of linked nodes. 
+Though Yang\cite{yang} introduced an algorithm addressing the similarity between two code fragments, H. Wang and Y. Zhang\cite{simple-tree-matching} followed a similar approach in context of Web data extraction.\\
+Algorithm \ref{lst:simple-tree} shows the function \textit{SimpleTreeMatching(A,B)} which takes two trees \textit{A},\textit{B} and returns the number of the longest continuous sequence of connected nodes.\\ 
+\\
+\begin{algorithm}[H]
+\SetAlgoLined
+	\If{the roots of the two trees $A$ and $B$ contain distinct symbols}{
+		\Return{0};
+	}
+	$m$ := the number of first-level subtrees of $A$;\\
+	$n$ := the number of first-level subtrees of $B$;\\
+	$M[i,0]$ := 0 for $i=0,\ldots,m$;\\
+	$M[0,j]$ := 0 for $j=0,\ldots,n$;\\
+	
+	\For{$i:=1$ to $m$}{
+		\For{$j:=1$ to $n$}{
+			$M[i,j]$:=$max(M[i,j-1], M[i-1,j], M[i-1,j-1] + W[i,j])$
+				where $W[i,j]$ = $SimpleTreeMatching(A,B)$\\
+				where $A$ and $B$ are the i-th and j-th first-level subtrees of $A$ and $B$ respectively
+		}
+	}
+	
+	\Return{$M[m,n] + 1$};
+\caption{SimpleTreeMatching(A,B)\label{lst:simple-tree}}
+\end{algorithm}
+\vspace{\baselineskip}
+As \cite{yang} mentioned two nodes are considered identical if and only if they contain identical symbols. For simplicity
+node symbols are limited to letters of the English alphabet, however every other content is imaginable, for instance HTML-tags
+as illustrated in \cite{simple-tree-matching}. However a more appropriate equality criteria is tag \textit{and} attribute equality. 
+In some cases the above criteria might be too restrictive, thus opening a new area area of research for extending the above algorithm.
+One approach would be an extension taking attribute similarity and tag similarity into account as existing
+ones\cite{simple-tree-matching} only consider the latter one.\\
+Another drawback of the above algorithm is that two trees do not match even if they differ only in the root node. 
+Therefore Yang\cite{yang} proposed an extension of the \textit{SimpleTreeMatching} algorithm loosening the constraint of matching
+nodes. Two nodes match if they are \textit{comparable} or \textit{identical}: Every identical node is also comparable but not the other way round. \\
+Due to the wide area of application a lot of effort has been spent into algorithms addressing tree similarity.
+To discuss all aspects regarding tree similarity would go beyond the scope of this thesis. 
 \subsection{Other Approaches}
 
 \newpage
