@@ -458,7 +458,22 @@ Therefore Yang\cite{yang} proposed an extension of the \textit{SimpleTreeMatchin
 nodes. Two nodes match if they are \textit{comparable} or \textit{identical}: Every identical node is also comparable but not the other way round. \\
 Due to the wide area of application a lot of effort has been spent into algorithms addressing tree similarity.
 To discuss all aspects regarding tree similarity would go beyond the scope of this thesis. 
+
 \subsection{Other Approaches}
+There are plenty of other research work addressing different areas, though some ideas seem also appropriate for adaptive functional
+Web application testing. This subsection outlines some of them and briefly discusses further research approaches using ideas from
+below.\\
+As Y. Yang and H. Zhang\cite{page-analysis_visual} motivated in their paper tools relying on the structural organization of a
+Website are not feasible due to the common misuses of the HTML markup language. Thus the W3C Consortium suggest Cascade Style Sheets(CSS\cite{css3}) facilitating a clear separating between content and appearance. Event though the Document Object Model(DOM\cite{dom})
+seems a better choice combining both in a consistent way, there are similar looking Website though differently organized.  
+As a remedy to this L. Wenyin et al.\cite{phishing-visual} first proposed an approach measuring the visual similarity of a Website.
+They measure visual similarity in three metrics: \textit{block level similarity}, \textit{layout similarity} and
+\textit{style similarity}. To calculate these metrics a Webpage is divided into salient blocks. Whereas block level similarity is defined as "the weighted average of all pairs of matched blocks", layout similarity is defined as "the ratio of the weighted number
+of matched blocks to the number of total blocks". The latter metric is can be calculated using the histogram of the style feature. 
+A. Fu et al.\cite{emd} proposed a different approach measuring similarity based on visual cues. A Webpage is first converted into 
+images bringing the advantage of structural independence meaning that their approach is not limited to HTML Webpages. Then the
+\textit{Earth Mover's Distance}\cite{emd-def} is calculated providing a universal metric for comparison. \\
+
 
 \newpage
 \bibliography{literature}
