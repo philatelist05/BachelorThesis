@@ -477,9 +477,14 @@ X. Gu et al.\cite{understanding-web-adaption} proposed a fundamentally different
 Their paper is based on the knowledge of the objective of Web publishers inferring that Web authors first decides \textit{what}
 to present and \textit{then} decides \textit{how} to present the information. Unlike former content adaption
 technologies\cite{function-object-model, adaptive-html-delivery} an automatic top-down, tag-tree independent approach is presented
-removing the limitation of a physical realization format. 
-
-
+removing the limitation of a physical realization format. The essential part is the \textit{Web Content Structure} which is
+formally defined as a triple $\Omega=(O,\Phi, \delta)$. Whereas $O$ is a finite set of identifiable objects, $\Phi$ describes
+possible separators and $\delta$ defines the relationship of every object pair. In other words $\Omega$ is tag-tree independent 
+abstraction of the visual representation of a Web page. In addition X. Gu et al.\cite{understanding-web-adaption} provide
+an algorithm, automatically inferring the Web Content Structure from any Webpage. Therefore the detection process recursively 
+divides a Webpage into smaller blocks and then merging similar ones via visual similarity. \\\\
+To sum up, even though there are many different approaches addressing changing Webpages in isolation, every one has it's strength
+and weaknesses. Yet, not a single approach have been applied to functional Web testing techniques offering wide area of research.
 \newpage
 \bibliography{literature}
 \bibliographystyle{plain}
