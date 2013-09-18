@@ -93,31 +93,29 @@ According to that one might conclude that finding bugs is the only purpose of so
 another definition coexist: "Software testing is the process of verifying the programs output against predefined values". Besides from 
 these IEEE\cite{ieee-definition} defines software testing as: "The process of operating a system or component under specified conditions, observing or recording the results, and making an evaluation of some aspect of the system or component".\\
 \subsection{Testing Techniques}
-This section outlines the different software testing techniques\cite{testing-methods} and briefly describes testing methods representing each of
-the mentioned techniques in context of Web application testing.
+This section outlines the different software testing techniques\cite{testing-methods} and briefly describes testing methods representing each of the mentioned techniques in context of Web application testing.
 \paragraph{Black-Box Testing} ~\\
 This testing technique looks at the code which needs to be tested as a whole. It requires no internal knowledge though test cases are typically 
 derived from functional requirements. Therefore some sort of input data is verified against generated outcome.
 It is impossible to test all possible input combinations. In \cite{softare-testing-principles} this is named as \textit{Dijkstra's Doctrine}
 where for a program accepting a six-character code, ensuring that the first character is numeric and the rest are alphanumeric, an input 
 sequence of 9161328320 combinations needs to be generated.
-According to \cite{testing-overview} one representative implementing this approach proposed by Di Lucca et al.\cite{decision-table-testing} will be described below.\\
--TODO detail description and explanation of \cite{decision-table-testing}-
+According to \cite{testing-overview} one representative implementing this approach is proposed by Di Lucca et al.\cite{decision-table-testing} which uses a decision table as it's essential part.  
 \paragraph{White-Box Testing} ~\\
 In contrast this technique examines the internals such as code, code structure and control flow. White-Box Testing can be further classified in
 static and structural testing. The former does not require executing the code thus the source code is sufficient for examination. The source code
 is analyzed either by humans through a code review or by static analysis tools which check for unreachable code, unused variables, memory leaks, use
-deprecated libraries and other metrics. The latter executes the program and use the control structure for coverage examination\cite{structural-testing}.\\
--TODO detail description and explanation of \cite{web-whiteBox-testing}-
+deprecated libraries and other metrics. The latter executes the program and use the control structure for coverage examination\cite{structural-testing}.
 \paragraph{Grey-Box Testing} ~\\
 To clarify the naming conflict, the two terms Grey-Box Testing and Gray-Box Testing are used synonymously in the literature\cite{bridge-grey}. 
 In the context of Web applications this new testing technique arises\cite{web-engineering}. Grey-Box Testing is a mixture of Black-Box and White-Box Testing as Grey-Box Testing (Black box + White box = Grey Box).\\
 One candidate representing this testing technique is \textit{User-Session based testing}. Though the behaviour of Web application is examined like in
-Black-Box Testing it requires some internal knowledge (e.g. links to other pages) due to it verifies page or link coverage.\\
--TODO detail description and explanation of \cite{user-session}-
+Black-Box Testing it requires some internal knowledge (e.g. links to other pages) due to it verifies page or link coverage.
 \subsection{Testing Levels}
-Testing Levels no different than in traditional software applications. TODO
-TODO see \cite{sw-testing-quality-assurance}
+Testing Levels are no different than in traditional software applications. 
+In this section three fundamental testing approaches, namely \textit{Unit Testing}, \textit{Integration Testing} and 
+\textit{System Testing}, beginning from fine-grained to coarse-grained testing levels. 
+
 \paragraph{Unit Testing} ~\\
 IEEE defines Unit Testing as\cite{ieee-definition} "testing of individual units or groups of related units". In \cite{sw-testing-quality-assurance}
 a unit "is the smallest possible testable software component". Another, yet more practical definition is\cite{practical-unit-testing-definition}:
