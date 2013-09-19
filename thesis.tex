@@ -46,9 +46,9 @@
 		This needs to be done.
 	\end{abstract}
 	\newpage
-	\thispagestyle{empty}
 	\onehalfspacing
 	\tableofcontents
+	\thispagestyle{empty}
 	\singlespacing
 \newpage
 \setcounter{page}{1}
@@ -77,10 +77,10 @@ with changing environments.\\
 Another important aspect is the huge user population. While in the beginnings of the World Wide Web only universities had access,
 nowadays the vast majority of the population can view content distributed across all over the world. The typical Web user range from a
 mother who does an online shopping tour over a teenager updating the current relationship status in Facebook to a student doing research for
-the Bachelor thesis. The integration of designers understanding these different social backgrounds of users is crucial.\\
+the Bachelor thesis. The integration of designers understanding these different social backgrounds of users is crucial. All of the
+above characteristics of Web applications make functional testing a difficult task though not impossible.\\
 
 
-All of the above characteristics of Web applications make functional testing a difficult task though not impossible.
 This thesis first gives an overview of the different testing approaches. For each 
 testing method a tool implementing it will be presented.\\
 -TODO Brief outline of the contents-
@@ -276,11 +276,42 @@ Selenium was originally developed by Jason R. Huggins working on a new time trac
 At that time client-side Javascript code was a nightmare to test due to the different browser implementations. Almost a decade later it is still one of 
 the most challenging tasks. Basically Selenium includes two different open source tools: \textit{Selenium IDE} and \textit{Selenium 2}. 
 The former provide testing novices the ability to get used to how tests are recorded and the scripting environment. It currently runs on Mozilla Firefox only thus
-shipping as a Firefox extension. The recommended way of using Selenium is through the latter tool which is the successor of Selenium 1. Developers spent a lot of
-effort in backward compatibility however is it of advantage to upgrade old Selenium 1 tests. \\\\
--TODO: further explanation and examples-\\\\
+shipping as a Firefox extension. The recommended way of using Selenium is through the latter tool which is the successor of Selenium 1. Developers have spent a lot of effort in backward compatibility, however is it of advantage to upgrade old Selenium 1 tests. \\
+As Selenium mimics human user interaction, commands are \textit{the} essential part of interaction. All available commands can be
+grouped into 3 command-groups: \textit{Actions}, \textit{Accessors} and \textit{Assertions}. While Actions typically alter the state of the application, Accessors operate on the state of the application and Assertions verify the application state. 
+In addition Selenium provides \textit{Element Locators} and \textit{Patterns}. The former, as the name implies, tells Selenium where
+to find HTML elements. The latter which is typically a regular expression can be used for instance of to identity the expected value 
+of a HTML element.
+\\\\ 
+Table \ref{tab:selenium-commands} provides a short summary of the most important commands.\\ 
+
+\begin{table}[H]
+	\begin{tabularx}{\textwidth}{l|X|X}
+		\textbf{Action} & \textbf{Selenium IDE Command\cite{ide-commands}} & \textbf{Selenium 2 Command\footnotemark\cite{selenium2-commands}} \\
+		\hline
+		Navigation to a specific URL & \texttt{open(URL)} & \texttt{driver.get(URL)}\\
+		clicking on an input element & \texttt{click(locator)} & \texttt{*.click()}\footnotemark\\
+		locating UI elements & \texttt{dom, xpath, css, identifier}\footnotemark & \texttt{driver.findElements(By.*)}\footnotemark\\
+	\end{tabularx}
+	\caption{A list of basic Selenium commands}
+	\label{tab:selenium-commands}
+\end{table}
+
+\footnotetext[1]{All commands are examples written in the Java programming language}
+\footnotetext[2]{* refers to any clickable HTML object}
+\footnotetext[3]{An element locator is used as a parameter of various Action-commands. Locators usually have the format of
+\textit{locatorType=argument}. Further information on element locators can be found on \cite{ide-commands}.}
+\footnotetext[4]{If exactly one element is expected the singular form \texttt{driver.findElement} should be used, otherwise the 
+plural form \texttt{driver.findElements} is suggested. For more information on element locators refer to \cite{selenium2-commands}}
+
+One major difference between Web applications and traditional GUI applications is that the testing process and the actual execution process run asynchronously. Therefore failing test cases do not necessarily mean that a test case indeed fail. For that reason 
+Selenium introduced \textit{"AndWait"} commands. Commands having the suffix AndWait perform it's intended action as it's
+non-waiting counterparts, but in addition wait for the page to load after the action has been done. As in AJAX Web applications there
+is no page refresh, \textit{"WaitForCondition"} commands provide an alternative to the above commands. A typical representative of
+this groups of commands is the \textit{waitForElementPresent} command which stops executing until the specified element is present.
+\\
 Due to the following major drawback the use of tools following a Data-driven approach is not recommended for commercial applications. The reason for this
-is scalability. To understand this problem the internals of a tool following a Data-driven approach need to be examined. Each row in a data-grid represents exaclty 
+is scalability. To understand this problem the internals of a tool following a Data-driven approach need to be examined. Each row in a data-grid represents exactly 
 a single test case. The implementation of the latter is done either automatically by recording user interactions or specified manually.
 In either way as more applications code needs to be tested new test cases generated in one of the above ways are required. 
 This leads to the conclusion that the number of lines of automation code is \textit{proportional} to the number of tests\cite{record-playback} which is generally 
