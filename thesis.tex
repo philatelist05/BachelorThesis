@@ -11,6 +11,9 @@
 \usepackage{float}
 \usepackage{tabularx}
 \usepackage[ruled,vlined]{algorithm2e}
+\usepackage[numbers]{natbib}
+\usepackage[style=american]{csquotes}
+\usepackage{paralist}
 
 \setcounter{tocdepth}{4}
 \cftsetindents{paragraph}{1cm}{0cm}
@@ -43,7 +46,7 @@
 	\maketitle
 	\thispagestyle{empty}
 	\begin{abstract}
-		Since Web applications are more and more replacing traditional Desktop applications, making Web engineering one of the
+		Web applications are more and more replacing traditional Desktop applications, making Web engineering one of the
 		most important disciplines in the IT industry. Thus functional tests, verifying the functioning of an application, are
 		crucial to the success of a Web project. This paper first gives an introduction to Software testing in general and
 		outlines two different Web Test Automation concepts in particular. Although there exist some distinct approaches 
@@ -60,103 +63,109 @@
 
 \section*{Introduction}
 \addcontentsline{toc}{section}{Introduction}
-Since the first proposal of HTTP\cite{http-proposal} Web sites evolved from 
-text pages, implementing the Request/Response Pattern\cite{request-response}, to  
+Since the first proposal of HTTP~\cite{http-proposal} Web sites evolved from 
+text pages, implementing the Request/Response Pattern~\cite{request-response}, to  
 complex Web applications. Whereas the former draws a clear distinction between a client
 who performs a request and a server who sends the response, the latter does not show this 
-clear differentiation. Even recently a new communication protocol\cite{web-socket} has been published 
-in which the browser acts like a server, listening for client-requests.\\
-Tilley and Huang\cite{web-classification} proposed
+clear differentiation. Even recently a new communication protocol, denoted WebSocket protocol~\cite{web-socket}, has been published 
+in which the browser acts like a server, listening for client-requests.
+
+~\citet{web-classification} proposed
 a new classification scheme for Web applications. They partition Web applications into three different categories:
 Class 1 are mainly static Web applications containing static content. Usually these are implemented as plain HTML sites. 
-Class 2 are Web applications with some sort of dynamic behaviour. Dynamic content is realized with technologies like Flash\cite{flash},
-embedded Java Applets\cite{java-applet}, Javascript or recently CSS3\cite{css3}. 
+Class 2 are Web applications with some sort of dynamic behaviour. Dynamic content is realized with technologies like Flash~\cite{flash},
+embedded Java Applets~\cite{java-applet}, Javascript or recently CSS3~\cite{css3}. 
 Class 3 represents the most complex Web applications. In addition to Class 1 and 2 these provide dynamically generated content by server-side technologies
 like JSP, PHP, ASP and others. Nowadays most Web applications represent Class 3. Unfortunately developing these requires much more expertise, increasing the
-likelihood of defects and often requiring much higher maintenance costs.\\
-Probably one of the most challenging aspects are constant changes. P.J.Warren et al.\cite{html-evolution}
+likelihood of defects and often requiring much higher maintenance costs.
+
+Probably one of the most challenging aspects are constant changes. ~\citet{html-evolution}
 presented a study which analyzed six websites. Their study shows a correlation between the complexity and the changes of
-a website. In other words, the more complex a website get the more likely they will change in the future. 
-There are structural and behavioural changes. While the former means changes in the document structure (e.g. Document Object Model(DOM)\cite{dom} or HTML), the latter
+a website. In other words, the more complex a website gets the more likely they will change in the future. 
+There are structural and behavioural changes. While the former means changes in the document structure (e.g. Document Object Model (DOM)~\cite{dom} or HTML), the latter
 includes all changes affecting how Web applications respond when an action is performed. 
 This requires adaptive testing techniques. Due to the importance of this characteristic, a whole section in this thesis outlines the challenges faced
-with regular changes in Web applications.\\ 
+with regular changes in Web applications.
+ 
 Another important aspect is huge user population. While in the beginnings of the World Wide Web only universities had access,
-nowadays the vast majority of the population can view content distributed across all over the world. The typical Web user range from a
-mother who does an online shopping tour over a teenager updating the current relationship status in Facebook to a student doing scientific research. Understanding these different social backgrounds of users is crucial, requiring the integration of designers in the Software Development Lifecycle(SDLC). All of the
+nowadays the vast majority of the population can view content distributed across all over the world. The typical Web user ranges from a
+mother who does an online shopping tour over a teenager updating the current relationship status on a social network platform to a student doing scientific research. Understanding these different social backgrounds of users is crucial, requiring the integration of designers in the Software Development Lifecycle (SDLC). All of the
 above characteristics of Web applications make functional testing a difficult task, though not impossible.\\\\
 This thesis first gives an overview of what is actually meant by Software testing and then outlines the different testing approaches. 
-The remainder of the first section discusses the three fundamental testing levels. In the second section general traps and pitfalls of Software Automation are outlined and two classes of Test Automation Frameworks are presented and compared. The third section briefly introduces some basic approaches trying to overcome the difficulties of regular changes in Web applications. 
+The remainder of the first section discusses the three fundamental testing levels. In the second section general traps and pitfalls of Software Automation are outlined and two classes of Test Automation Frameworks are presented and compared. The third section briefly introduces some basic approaches trying to overcome the difficulties of regular changes in Web applications. Finally, the last section draws a conclusion and provides an outlook of future research directions.
 \newpage
 
 \section{Software Testing}
-G. Myers\cite{art-of-software-testing} define software testing as "the process of executing a program with the intent of finding errors".
-According to that one might conclude that finding bugs is the only purpose of software testing. Since TDD\cite{tdd} became popular
-another definition coexist: "Software testing is the process of verifying the programs output against predefined values". Besides from 
-these IEEE\cite{ieee-definition} defines software testing as: "The process of operating a system or component under specified conditions, observing or recording the results, and making an evaluation of some aspect of the system or component".\\
+~\citet{art-of-software-testing} define software testing as \enquote{the process of executing a program with the intent of finding errors}.
+According to that one might conclude that finding bugs is the only purpose of software testing. Since Test-Driven Development (TDD)~\cite{tdd} became popular
+another definition coexist: \enquote{Software testing is the process of verifying the programs output against predefined values}. Besides from 
+these IEEE~\cite{ieee-definition} defines software testing as: \enquote{The process of operating a system or component under specified conditions, observing or recording the results, and making an evaluation of some aspect of the system or component}.\\
 \subsection{Testing Techniques}
-This section outlines the different software testing techniques\cite{testing-methods} and briefly describes testing methods representing each of the mentioned techniques in context of Web application testing.
+This section outlines the different software testing techniques~\cite{testing-methods} and briefly describes testing methods representing each of the mentioned techniques in context of Web application testing.
 \paragraph{Black-Box Testing} ~\\
 This testing technique looks at the code which needs to be tested as a whole. It does not require no internal knowledge, though test cases are usually 
 derived from functional requirements. Therefore some sort of input data is verified against generated outcome.
-It is impossible to test all possible input combinations. S. Desikan and G. Ramesh\cite{softare-testing-principles} name it \textit{Dijkstra's Doctrine}
+It is impossible to test all possible input combinations. ~\citet{softare-testing-principles} name it \textit{Dijkstra's Doctrine}
 where for a program, accepting a six-character code, ensuring that the first character is numeric and the rest are alphanumeric, an input 
 sequence of 9161328320 combinations needs to be generated.
-According to \cite{testing-overview} one representative implementing this approach is proposed by Di Lucca et al.\cite{decision-table-testing} which uses a decision table as it's essential part.  
+According to~\cite{testing-overview} one representative implementing this approach is proposed by~\citet{decision-table-testing} which uses a decision table as its essential part.  
 \paragraph{White-Box Testing} ~\\
 In contrast, this technique examines the internals such as code, code structure and control flow. White-Box Testing can be further classified in
 static and structural testing. The former does not require executing the code, thus making the source code sufficient for examination. The source code
-is analyzed either by humans through a code review or by static analysis tools which check for unreachable code, unused variables, memory leaks, use
-deprecated libraries and other metrics. Structural tests execute the program and use the control structure for coverage examination\cite{structural-testing}.
+is analyzed either by humans through a code review or by static analysis tools which check for unreachable code, unused variables, memory leaks, the use of
+deprecated libraries and other metrics. Structural tests execute the program and use the control structure for coverage examination~\cite{structural-testing}.
 \paragraph{Grey-Box Testing} ~\\
-To clarify the naming conflict, the two terms Grey-Box Testing and Gray-Box Testing are used synonymously in the literature\cite{bridge-grey}. 
-This new testing technique\cite{web-engineering} arise in context of Web applications. Grey-Box Testing can be described as a mixture of Black-Box and White-Box Testing(Black box + White box = Grey Box).\\
+To clarify the naming conflict, the two terms Grey-Box Testing and Gray-Box Testing are used synonymously in the literature~\cite{bridge-grey}. 
+This new testing technique~\cite{web-engineering} arises in the context of Web applications. Grey-Box Testing can be described as a mixture of Black-Box and White-Box Testing (Black Box + White Box = Grey Box).
+
 One candidate, representing this testing technique is \textit{User-Session based testing}. Though the behaviour of Web application is examined like in
 Black-Box Testing it requires some internal knowledge (e.g. links to other pages).
 \subsection{Testing Levels}
-Testing Levels are no different than in traditional software applications. 
+Testing Levels in the context of Web applications are no different than in traditional software applications. 
 This section introduces three fundamental testing approaches, namely \textit{Unit Testing}, \textit{Integration Testing} and 
 \textit{System Testing}, beginning from fine-grained to coarse-grained. 
 
 \paragraph{Unit Testing} ~\\
-IEEE defines Unit Testing\cite{ieee-definition} as "testing of individual units or groups of related units". In \cite{sw-testing-quality-assurance}
-a unit "is the smallest possible testable software component". Another, yet more practical definition is\cite{practical-unit-testing-definition}:
-A unit test is "a test, executed by the developer in a laboratory environment, that should demonstrate that the program meets the requirements set in the design specification". Though these definition clearly clarify what unit testing is in general, often there are misunderstandings. P. Runeson\cite{unit-testing-survey} concludes,
+IEEE defines Unit Testing~\cite{ieee-definition} as \enquote{testing of individual units or groups of related units}. In~\cite{sw-testing-quality-assurance}
+a unit \enquote{is the smallest possible testable software component}. Another, yet more practical definition is~\cite{practical-unit-testing-definition}:
+A unit test is \enquote{a test, executed by the developer in a laboratory environment, that should demonstrate that the program meets the requirements set in the design specification}. Though these definition clearly clarifies what unit testing is in general, often there are misunderstandings. ~\citet{unit-testing-survey} concludes,
 before specifying Unit tests a company should determine the granularity of units and what needs to be tested.
 These questions help agreeing on Unit testing principles in the development process:\\
 \begin{itemize}
 	\item \textbf{How is a unit test conducted?}\\
-	Nowadays most developers agree on conducting unit tests in the from of test-driven design(TDD)\cite{beck-tdd}. 
+	Nowadays most developers agree on conducting unit tests in the from of TDD~\cite{beck-tdd}. 
 	In the earlier days there did not even exist code verifying other code. The only meta language to describe the functionality of a software component was either
 	code comments or plain English text.
 	\item \textbf{When are unit tests executed?}\\
 	Unit tests should have no external dependencies which cause long running Unit tests. In TDD fashion non dependable tests are executed during each iteration,
 	usually several times a day. Long running Integration tests typically run as nightly builds, ideally executed by an automated build environment like
-	Maven\cite{maven} or Ant\cite{ant}.
+	Maven~\cite{maven} or Ant~\cite{ant}.
 	\item \textbf{Who decides how unit test shall be conducted?}
 	As mentioned above fine grained tests are executed by a developer during a single iteration. It is his/her own responsibility whether a chunk of code needs to
 	be tested or not.
 \end{itemize}
-As we know what a Unit test is, one important question arise: How to select Unit test cases? At one extreme, test cases with one hundred percent statement coverage
-are surely too much. On the other hand no testing at all lead to undesirable behaviour at least or even worst, unrecoverable damage. 
+As we know what a Unit test is, one important question arises: How to select Unit test cases? At one extreme, test cases with one hundred percent statement coverage
+are surely too much. On the other hand no testing at all leads to undesirable behaviour at least or even worst, unrecoverable damage. 
 As a rule of thumb only code causing state changes should be tested. For example testing a method, returning only the state of an object or variable (e.g. getter/setter methods) is unnecessary, though they can be used in context with other computations. Unit testing frameworks 
-like JUnit\cite{junit} offer a special method dedicated especially for setting up the environment.\\
+like JUnit~\cite{junit} offer a special method dedicated especially for setting up the environment.
+
 Writing testable code affects the whole development process. It changes the design of classes fundamentally. One class should serve exactly one and only one purpose. Breaking this principle means high coupling. Dependencies to other classes are not desirable because they introduce new
 side effects. In addition, third party dependencies may lead to unpredictable or erroneous behaviour because of blindly trusting foreign code.
 As a best practice, third party dependencies should be kept in one single place. This has the advantage of testing third party code in isolation 
 and one single point of failure instead of many ones. However sometimes class level dependencies can not be removed.
-One solution T. Mackinnon et al.\cite{mock-objects} proposed is using mock objects instead of real ones. In the literature the terms \textit{mock object} and \textit{stub implementation} are often used synonymously, though M. Fowler clearly differentiate\cite{fowlermocks} (together with similar confusing terms): "A \textit{Mock object} is an object having the same interface as the real implementation." It can be initialized with state for further verification. 
-A \textit{Stub} "provide canned answers to calls made during the test." It usually does provide some predefined behaviour.\\\\ 
+One solution~\citet{mock-objects} proposed is using mock objects instead of real ones. In the literature the terms \textit{mock object} and \textit{stub implementation} are often used synonymously, though M. Fowler clearly differentiate~\cite{fowlermocks} (together with similar confusing terms): \enquote{A \textit{Mock object} is an object having the same interface as the real implementation.} It can be initialized with state for further verification. 
+\textit{Stubs} \enquote{provide canned answers to calls made during the test.} It usually does provide some predefined behaviour.\\\\ 
 It can be summarized that Unit testing is an important technique ensuring software quality. Due to the fine grained test cases Unit tests should run in isolation. 
 
 \paragraph{Integration Testing} ~\\
-As Web applications consist of multiple components there is a need for strategies to combine them. Integration testing\cite{sw-testing-quality-assurance} is defined as "testing the interaction between the modules and interaction with other systems externally". IEEE defines
-\textit{integration}\cite{ieee-definition} as "the process of combining software components, hardware components, or both into an overall system" and \textit{Integration testing}\cite{ieee-definition} as 
-"Testing in which software components, hardware components, or both are combined and tested to evaluate the interaction between them".\\
-Integration testing is different depending on the chosen integration strategy. The list below summarizes the main software integration strategies\cite{schattenbest}:\\
+As Web applications consist of multiple components there is a need for strategies to combine them. Integration testing~\cite{sw-testing-quality-assurance} is defined as \enquote{testing the interaction between the modules and interaction with other systems externally}. IEEE defines
+\textit{integration}~\cite{ieee-definition} as \enquote{the process of combining software components, hardware components, or both into an overall system} and \textit{Integration testing}~\cite{ieee-definition} as 
+\enquote{Testing in which software components, hardware components, or both are combined and tested to evaluate the interaction between them}.
+
+Integration testing is different depending on the chosen integration strategy. The list below summarizes the main software integration strategies~\cite{schattenbest}:\\
 \begin{itemize}
 	\item \textbf{Big-Bang integration}\\
-	IEEE defines it as\cite{ieee-definition} "A type of integration [testing] in which software elements, hardware elements, or both are combined all at once into an overall system, rather than in stages". These strategy is the simplest and the most obvious one, though software system are rarely integrated following this approach. It assumes that all integrated software components work together well and all possibilities are taken into account from the beginning. This is of course
+	IEEE~\cite{ieee-definition} defines it as \enquote{A type of integration [testing] in which software elements, hardware elements, or both are combined all at once into an overall system, rather than in stages}. These strategy is the simplest and the most obvious one, though software systems are rarely integrated following this approach. It assumes that all integrated software components work together well and all possibilities are taken into account from the beginning. This is of course
 unrealistic in today's software applications as dozens of developers work on the same application showing up more and more dependencies to legacy code. 
 	\item \textbf{Continuous integration}\\
 	This is probably one of the most popular strategies nowadays. Even small software pieces are integrated continuously. Depending on the 
@@ -169,61 +178,68 @@ unrealistic in today's software applications as dozens of developers work on the
 	Software components are integrated from top to bottom. A typical (Web) application consists of three or more layers. Integration, starting at the topmost layer,
 	provide an overview of the whole system, even early in the development process. The drawback of this strategy is the simulation of bottom layers with the risk
 	of false expectations. Fortunately not all components depend on pieces of code in lower layers. These components are often called
-	\textit{sub-system}\cite{sw-testing-quality-assurance}. Sub-systems work isolated from the rest of the components. 
+	\textit{sub-system}~\cite{sw-testing-quality-assurance}. Sub-systems work isolated from the rest of the components. 
 	\item \textbf{Bottom-up integration}\\
 	It is basically the opposite of the above. Components, residing at the lower layer, are integrated before those at higher layers. 
 	It does not require any simulation because all components are defined from ground up. Users interact with an application through the graphical user
 	interface, residing at the topmost layer which will be implemented later. Thus users can interact with the application at the end of the development phase. 
 	We recommend developing a demo application (e.g. \textit{prototype}), providing a first impression of the whole system.
-	\item \textbf{Bi-directional integration}\cite{sw-testing-quality-assurance}\\
-	This approach, also known as \textit{Build integration}\cite{schattenbest}, combines both, Top-down and Bottom-up integration. 
+	\item \textbf{Bi-directional integration}~\cite{sw-testing-quality-assurance}\\
+	This approach, also known as \textit{Build integration}~\cite{schattenbest}, combines both, Top-down and Bottom-up integration. 
 	Individual components are grouped into categories. At first, components in each category are integrated bottom-up, leaving the topmost layer.
 	Then all remaining components are integrated top-down.
 \end{itemize}
 \paragraph{System Testing} ~\\
-IEEE defines \textit{System testing}\cite{ieee-definition} as "testing conducted on a complete, integrated system to evaluate the system's compliance with its specified requirements". As the whole application is finished, System testing begins. It aims as evaluating the system against initial requirements.
+IEEE defines \textit{System testing}~\cite{ieee-definition} as \enquote{testing conducted on a complete, integrated system to evaluate the system's compliance with its specified requirements}. As the whole application is finished, System testing begins. It aims as evaluating the system against initial requirements.
 Depending on the type of requirement either test cases, implementing \textit{functional} or \textit{non-functional} requirements, are executed as they are defined during the requirement-gathering phase. 
 \begin{itemize}
 	\item \textbf{Functional testing}\\
-	IEEE's defines Functional testing\cite{ieee-definition} as
-	"Testing conducted to evaluate the compliance of a system or component with specified functional requirements". Thus functional tests ensure
+	IEEE defines Functional testing~\cite{ieee-definition} as
+	\enquote{Testing conducted to evaluate the compliance of a system or component with specified functional requirements}. Thus functional tests ensure
 	the correct functioning or behaviour of the whole system and they are typically of black-box type.
 	They focus on evaluating the outcome against predefined expectations. Functional testing of Web applications is hard, due to the
 	reasons mentioned in the introduction. This is the reason why there is no ultimate tool, satisfying all needs and no best practice. Though there are many
 	tools which implement different approaches.
 	\item \textbf{Non-functional testing}\\
-	There are several approaches implementing this kind of testing. One are performance tests. Since the well known publication of Gordon E. Moore back in 
-	1965\cite{moore}, stating that the number of integrated circuits will at least double every year, computation power indeed has increased.
+	There are several approaches implementing this kind of testing. One are performance tests. Since the well known publication of~\citet{moore} back in 
+	1965, stating that the number of integrated circuits will at least double every year, computation power indeed has increased.
 	However, performance tests are still important due to increasing complexity and feature richness of today’s applications. Another non-functional 
-	testing approach is security testing. Although the Open Web Application Security Project, abbreviated OWASP\cite{owasp}, published the list of the top ten
-	Web security threats, the number of exploits listed in the Metasploit Database\cite{metasploit} still increase. Thus security testing is crucial for the success
+	testing approach is security testing. Although the Open Web Application Security Project, abbreviated OWASP~\cite{owasp}, published the list of the top ten
+	Web security threats, the number of exploits listed in the Metasploit Database~\cite{metasploit} still increase. Thus security testing is crucial for the success
 	of a software company. Apart from the above, there are other approaches which would exceed the scope of this thesis. 
 \end{itemize}
 \section{Test Automation}
 Most of the time developers spend time reading other's code. In the remaining time they write code, chat with colleagues or do other things.
 Therefore time consuming, long running tasks should be done manually by someone else or automated.
 While the former might seem outdated, in some areas there are still manual testing techniques which can not be replaced by automation.
-One the other hand test automation tools gain increasing importance.\\
+One the other hand test automation tools gain increasing importance.
+
 This section first compares the advantages and disadvantages of test automation and compares different kinds of test automation frameworks.
 \subsection{Pitfalls of Test Automation}
-Possible pitfalls and misconceptions\cite{test-automation-success} of test automation are listed below.
+Possible pitfalls and misconceptions~\cite{test-automation-success} of test automation are listed below.
 \begin{itemize}
 	\item \textbf{Automated testing completely replaces manual testing.}\\
 	Often people who do not understand testing or even testers and test managers who should agree on this statement think that manual testing can be omitted if automated tests are present. Another related misconception 
-	is to automate all tests. B. Marick\cite{testing-mistakes} differences two economic facts regarding automation versus manual testing:
-	"If an automated test costs a certain amount of money, it will cost almost nothing to run from then on." and
-	"If a manual test costs a certain amount of money to run the first time, it will cost just about the same as first time to run each time thereafter."
-	These two statements conclude that complex automated testing should be done manually for economic reasons.
-	However, \cite{test-automation-success} lists some guidelines whether tests should be automated or not: Tests running on every build,
-	testing on many different platforms and the same setup procedures for a lot of different tests. \\
+	is to automate all tests. ~\citet{testing-mistakes} differences two economic facts regarding automation versus manual testing:
+	\enquote{If an automated test costs a certain amount of money, it will cost almost nothing to run from then on.} and
+	\enquote{If a manual test costs a certain amount of money to run the first time, it will cost just about the same as first time to run each time thereafter.}
+	These two statements conclude that complex automated testing should not be done manually for economic reasons.
+	However,~\cite{test-automation-success} lists some guidelines whether tests should be automated or not:
+	\begin{inparaenum}[1)]
+		\item Tests running on every build,
+		\item testing on many different platforms and
+		\item the same setup procedures for a lot of different tests
+	\end{inparaenum}
+	are indicators for test automation.
+
 	Another, yet more significant reason is that the only way to evaluate automated tests is by manual reviews. This is a variant of the well known
 	chicken egg problem. In order to test the quality of automated tests, meta test cases are required which again require additional test cases and so on.
 	\item \textbf{The Pesticide Paradox}\\
-	S. Desikan and G. Ramesh\cite{softare-testing-principles} compare writing software test cases with "designing the right pesticides to catch and kill the pests".
+	~\citet{softare-testing-principles} compare writing software test cases with \enquote{designing the right pesticides to catch and kill the pests}.
 	It means that developers writing code get used to automated test cases and develop \textit{just for} passing the test but test cases never cover one hundred 
 	percent of all possible execution paths. 
 	\item \textbf{Independence}\\
-	Probably every developer knows that Unit test should run independent of each other. Fortunately these tests usually have low coupling, requiring minimal
+	Probably every developer knows that Unit test should run independently of each other. Fortunately these tests usually have low coupling, requiring minimal
 	overhead to set up. But \textit{all} kinds of tests should run in isolation, thus not affecting the outcome of other tests.
 	This is extremely challenging especially for coarse grained tests like functional Web application tests. However some test cases logically depend on each other, as for instance for a simple Website which offers some online shopping functionality. One test case verifies the correct authentication behaviour for an arbitrary user and
 	another evaluates the correct computation of the total price if a customer adds items to the shopping cart.
@@ -245,22 +261,24 @@ tested and why.
 \subsection{Test Automation Frameworks}
 As the World Wide Web attracted more and more people there has been a growing need for automated evaluation of Web applications. Companies are willing to
 invest a lot for a powerful automation tool. All the above approaches have the term \textit{framework} in common. R. Johnson and B. Foote define it
-in the context of Object Oriented Programming\cite{oop} as
-"a set of classes that embodies an abstract design for solutions to a family of related problems, and supports reuses at a larger granularity than classes".
-This definition can also be applied to automated testing where the term \textit{Test Automation Framework} seems appropriate.\\
-E. Kit\cite{kit} distinguishes three generations of automation tools:
+in the context of Object Oriented Programming~\cite{oop} as
+\enquote{a set of classes that embodies an abstract design for solutions to a family of related problems, and supports reuses at a larger granularity than classes}.
+This definition can also be applied to automated testing where the term \textit{Test Automation Framework} seems appropriate.
+
+~\citet{kit} distinguishes three generations of automation tools:
 \begin{enumerate}
 	\item The most basic tools use the \textit{Capture and Playback} approach. It works as a one needs to manually perform all steps necessary for evaluation which
 	are subsequently recorded for replaying.
-	These tools have one major drawback in common as high maintenance costs\cite{record-playback}. Once everything is recorded there is no guarantee that all
+	These tools have one major drawback in common as high maintenance costs~\cite{record-playback}. Once everything is recorded there is no guarantee that all
 	test cases do not break in the future, though all work now. Another yet more problematic disadvantage are hard-coded data generated by
-	scripting languages. This should be avoided in any programming language\cite{automation-principles}. 
-	The last problem during playback is synchronization issues due to the distributed nature of Web applications. Obviously it takes some time for the browser to
-	fetch a Website. In order to function correctly the tool implementing capture and playback needs to properly guess the delay after the server has sent a the response.
+	scripting languages. This should be avoided in any programming language~\cite{automation-principles}. 
+	The last problem during playback are synchronization issues due to the distributed nature of Web applications. Obviously it takes some time for the browser to
+	fetch a Website. In order to function correctly the tool implementing capture and playback needs to properly guess the delay after the server has sent
+	the response.
 	Of course no tool is able to predict the future thus (over-)estimating the delay or requiring the programmer to explicitly put synchronization points
 	into the generated script. Both solutions are cumbersome and difficult.
 	\item Second generation Capture and Playback tools have lessons learned. Instead of a single capture phase, tools require writing scripting code. Vendors 
-	equip their tools with a full blown scripted language which brings all the advantages of a modern programming language like code-reuse, conditional execution and
+	equip their tools with a full blown scripting language which brings all the advantages of a modern programming language like code-reuse, conditional execution and
 	error recovery to name a few. However treating automation as a software engineering task requires additional domain experts.
 	\item Tools from the above two generations generate a single script for all test cases. Third generation Capture and Playback tools use many small scripts each 
 	responsible for a single test case. It further extracts hard-coded data out of the scripts leading to a new era of frameworks called
@@ -268,25 +286,27 @@ E. Kit\cite{kit} distinguishes three generations of automation tools:
 \end{enumerate} 
 \paragraph{Data-driven Frameworks} ~\\
 The basic concept of Data-driven Automation Frameworks is a separation between the behavioural instructions and the data used as parameter for each test case. 
-As \cite{record-playback} stated, parameters are usually kept in separated files organized as a grid. There is no limitation about the actual data format, though
+As~\cite{record-playback} stated, parameters are usually kept in separated files organized as a grid. There is no limitation about the actual data format, though
 for usability reasons, using spreadsheet readable formats is recommended. Even though the concept of Data-driven Automation Frameworks is not application specific, until today only tools testing GUI and Web applications can be found. In the remainder of this paragraph a popular Data-driven Automation
-tool \textit{Selenium}\cite{selenium} specifically designed for Web application testing is presented.\\
-Selenium was originally developed by Jason R. Huggins working on a new time tracking system for ThoughtWorks back in 2004\cite{shortcut-selenium}.
+tool \textit{Selenium}~\cite{selenium} specifically designed for Web application testing is presented.
+
+Selenium was originally developed by Jason R. Huggins working on a new time tracking system for ThoughtWorks back in 2004~\cite{shortcut-selenium}.
 At that time client-side Javascript code was a nightmare to test due to different browser implementations. Almost a decade later it is still one of 
 the most challenging tasks. Basically Selenium includes two different open source tools: \textit{Selenium IDE} and \textit{Selenium 2}. 
-The former provide testing novices the ability to get used to how tests are recorded and the scripting environment. It currently runs on Mozilla Firefox only, thus it
-ships as a Firefox extension. The recommended way of using Selenium is through Selenium 2 which is the successor of Selenium 1. Developers have spent a lot of effort in backward compatibility, however is it of advantage to upgrade old Selenium 1 tests. \\
+The former provides testing novices the ability to get used to how tests are recorded and the scripting environment. It currently runs on Mozilla Firefox only, thus it
+ships as a Firefox extension. The recommended version for production use is Selenium 2 which is the successor of Selenium 1. Developers have spent a lot of effort in backward compatibility, however it is of advantage to upgrade old Selenium 1 tests. 
+
 As Selenium mimics human user interaction, commands are \textit{the} essential part of interaction. All available commands can be
 grouped into three command-groups: \textit{Actions}, \textit{Accessors} and \textit{Assertions}. While Actions typically alter the state of the application, Accessors operate on the state of the application and Assertions verify the application state. 
 In addition Selenium provides \textit{Element Locators} and \textit{Patterns}. The former, as the name implies, tells Selenium where
-to find HTML elements. The latter, which is typically a regular expression, can be used for instance to identity the expected value 
+to find HTML elements. The latter, which is typically a regular expression, can be used for instance to identify the expected value 
 of a HTML element.
 \\\\ 
 Table \ref{tab:selenium-commands} provides a short summary of the most important commands.\\ 
 
 \begin{table}[H]
 	\begin{tabularx}{\textwidth}{l|X|X}
-		\textbf{Action} & \textbf{Selenium IDE Command\cite{ide-commands}} & \textbf{Selenium 2 Command\footnotemark\cite{selenium2-commands}} \\
+		\textbf{Action} & \textbf{Selenium IDE Command~\cite{ide-commands}} & \textbf{Selenium 2 Command\footnotemark~\cite{selenium2-commands}} \\
 		\hline
 		Navigation to a specific URL & \texttt{open(URL)} & \texttt{driver.get(URL)}\\
 		clicking on an input element & \texttt{click(locator)} & \texttt{*.click()}\footnotemark\\
@@ -299,44 +319,47 @@ Table \ref{tab:selenium-commands} provides a short summary of the most important
 \footnotetext[1]{All commands are examples written in the Java programming language}
 \footnotetext[2]{* refers to any clickable HTML object}
 \footnotetext[3]{An element locator is used as a parameter of various Action-commands. Locators usually have the format of
-\textit{locatorType=argument}. Further information on element locators can be found in \cite{ide-commands}.}
+\textit{locatorType=argument}. Further information on element locators can be found in~\cite{ide-commands}.}
 \footnotetext[4]{If exactly one element is expected, the singular form \texttt{driver.findElement} should be used, otherwise the 
-plural form \texttt{driver.findElements} is suggested. For more information on element locators refer to \cite{selenium2-commands}.}
+plural form \texttt{driver.findElements} is suggested. For more information on element locators refer to~\cite{selenium2-commands}.}
 
-One major difference between Web applications and traditional GUI applications is that the testing process and the actual execution process run asynchronously. Therefore failing test cases do not necessarily mean that a test case indeed fail. For that reason 
-Selenium introduced \textit{"AndWait"} commands. Commands having the suffix AndWait perform it's intended action as it's
+One major difference between Web applications and traditional GUI applications is that the testing process and the actual execution process run asynchronously. Therefore failing test cases do not necessarily mean that a test case indeed fails. For that reason 
+Selenium introduced \textit{AndWait} commands. Commands having the suffix AndWait perform its intended action as its
 non-waiting counterparts, but in addition wait for the page to load after the action has been done. As in AJAX Web applications there
 is no page refresh. \textit{WaitForCondition} commands provide an alternative to the above commands. A typical representative of
 this groups of commands is the \textit{waitForElementPresent} command which stops executing until the specified element is present.
-\\
+
 Due to the following major drawback, the use of tools following a Data-driven approach is not recommended for commercial applications. The reason for this
 is scalability. To understand this problem, the internals of a tool following a Data-driven approach need to be examined. Each row in a data-grid represents exactly 
 a single test case. The implementation of the latter is done either automatically by recording user interactions or specified manually.
-In either way as more applications code needs to be tested new test cases generated in one of the above ways are required. 
-This leads to the conclusion that the number of lines of automation code is \textit{proportional} to the number of tests\cite{record-playback} which is generally 
+In either way as more application code needs to be tested new test cases generated in one of the above ways are required. 
+This leads to the conclusion that the number of lines of automation code is \textit{proportional} to the number of tests~\cite{record-playback} which is generally 
 undesirable. 
 \paragraph{Model-driven Frameworks} ~\\
 Model-driven Frameworks take a fundamentally different approach. They check the correctness of a system using a technique called \textit{model checking}.
-E. M. Clarke \textit{et al.}\cite{model-checking} defines model checking as "an automatic technique for verifying finite state [concurrent] systems".
-The term \textit{finite state} typically refers to the concept of Finite State Machines(FSM)\cite{finite-state-machines} which are graphically represented by a directed graph where nodes make up the states. Changes from one state to another are called transitions. A FSM must have by definition exactly one start/entry state and one or more end states.  In Model Checking a finite state model \textit{M} is limited by a constraint expressed as a logical formula \textit{f} where
+~\citet{model-checking} defines model checking as \enquote{an automatic technique for verifying finite state [concurrent] systems}.
+The term \textit{finite state} typically refers to the concept of Finite State Machines (FSM)~\cite{finite-state-machines} which are graphically represented by a directed graph where nodes make up the states. Changes from one state to another are called transitions. A FSM must have by definition exactly one start/entry state and one or more end states.  In Model Checking a finite state model \textit{M} is limited by a constraint expressed as a logical formula \textit{f} where
 following condition is checked: \textit{M} satisfies \textit{f}. A logical formula \textit{f} is composed of atomic propositions and boolean
-expressions\cite{model-checking}. Researchers have spent a lot of effort in several temporal logic formalisms. The two most important ones are
-\textit{computation tree logic(CTL)} and \textit{linear temporal logic}, though for the purpose of model checking simpler
-ones seems sufficient\cite{dynamic-testing-web-applications}. \\
-F. Ricca and P. Tonella proposed in their paper\cite{web-whiteBox-testing} one of the first model checking approaches. They introduced a meta model (\textit{navigational model}), describing the general Web application structure which is given in the Unified Modeling Language (UML)\cite{uml}.
-A navigational model shows the connections (\textit{links}) between Webpages. Navigation constraints are realized as key-value pairs and static and dynamic Webpages. 
+expressions~\cite{model-checking}. Researchers have spent a lot of effort in several temporal logic formalisms. The two most important ones are
+\textit{computation tree logic (CTL)} and \textit{linear temporal logic (LTL)}, though for the purpose of model checking of Web applications, simpler
+ones seem sufficient~\cite{dynamic-testing-web-applications}. 
+
+\citeauthor{web-whiteBox-testing} proposed in their paper~\cite{web-whiteBox-testing} one of the first model checking approaches. They introduced a meta model (\textit{navigational model}), describing the general Web application structure which is given in the Unified Modeling Language (UML)~\cite{uml}.
+A navigational model shows the connections (\textit{links}) between Webpages. Navigation constraints are realized as key-value pairs of static and dynamic Webpages. 
 Whereas the content of the former never changes, the content of the latter is computed dynamically at runtime using input parameters. Then a test case is
-"a sequence of pages to be visited plus the input values to be provided to pages containing forms"\cite{web-whiteBox-testing}. Although the primary research focus
+\enquote{a sequence of pages to be visited plus the input values to be provided to pages containing forms}~\cite{web-whiteBox-testing}. Although the primary research focus
 lies on \textit{path coverage} (e.g. verifying that a path is visited), their approach promises additional testing criterias: All-paths testing, All-uses testing,
-Hyperlink testing, Page testing and Defintion-use testing. As an automatic test case generation scheme they proposed an algorithm  which generates test cases, though it requires manual involvement for path coverage. Due to the latter factor and the growing number of rich client applications, more dynamic approaches have been explored.\\
-H. Tanida et al.\cite{dynamic-testing-web-applications} extended the above approach to AJAX Web applications. In order to build a navigational model all 
-application states need to be explored. Although they used the tool \textsc{Crawlajax}\cite{crawlajax} for exploring applications states, manual
+Hyperlink testing, Page testing and Defintion-use testing. As an automatic test case generation scheme they proposed an algorithm  which generates test cases, though it requires manual involvement for path coverage. Due to the latter factor and the growing number of rich client applications, more dynamic approaches have been explored.
+
+~\citet{dynamic-testing-web-applications} extended the above approach to AJAX Web applications. In order to build a navigational model all 
+application states need to be explored. Although they used the tool \textsc{Crawlajax}~\cite{crawlajax} for exploring applications states, manual
 crawling (\textit{guided crawling}) is still necessary to explore all application states. Automatic model generation is a time consuming and inefficient task. 
-Therefore different approaches such as hashcode computation, state compression, recursive indexing\cite{recursive-indexing}, delta update or Sweep
-Line\cite{sweep-line} have been taken into account in order to reduce state space\cite{state-space-reduction}. However \cite{dynamic-testing-web-applications}
+Therefore different approaches such as hashcode computation, state compression, recursive indexing~\cite{recursive-indexing}, delta update or Sweep
+Line~\cite{sweep-line} have been taken into account in order to reduce the state space~\cite{state-space-reduction}. However~\cite{dynamic-testing-web-applications}
 implemented a \textit{state abstraction} technique which simplifies removing all redundant states. A tool
-named \textsc{Goliath} accepts the generated navigation model and evaluates a set of expressions. Hence it operates on the DOM, it accepts XPath expressions like \texttt{doc.xpath('//a[@id="login"]').any?}. \\
-Although Testing Ajax applications through model checking seems most promising, A. Deursen and A. Mesbah\cite{research-issues-model-checking-ajax} proposed a model checker\cite{atusa} which is based on \textit{invariants}. That are
+named \textsc{Goliath} accepts the generated navigation model and evaluates a set of expressions. Hence it operates on the DOM, it accepts XPath expressions like \texttt{doc.xpath('//a[@id="login"]').any?}. 
+
+Although Testing Ajax applications through model checking seems most promising,~\citet{research-issues-model-checking-ajax} proposed a model checker~\cite{atusa} which is based on \textit{invariants}. That are
 different constraints concerning the user interface. However a number of open research questions remain:
 \begin{itemize}
 	\item What is the most promising approach for expressing user interface constraints?
@@ -344,29 +367,31 @@ different constraints concerning the user interface. However a number of open re
 	\item Hence Javascript code is a script language, how does Javascript faults affect the model generation process?
 \end{itemize}
 \vspace{1.5cm}
-All in all, as in \cite{why-model-based-automation} Model based Testing Frameworks are the newest generation of Test
-Automation Frameworks, hence it can be seen as the \textit{fourth generation}. While the first and second generation mainly focuses on test execution, neglecting test design, the third generation separate test case definition from test-scripting. Although researches have investigated in extending the traditional capture-playback approach creating action-based, keyword-based, object-based or class-based approaches, every single one does require
-some sort of human interaction. Though, as motivated in \cite{crawlajax}, fully automated model generation is not possible mainly
+All in all, as in~\cite{why-model-based-automation} Model based Testing Frameworks are the newest generation of Test
+Automation Frameworks, hence it can be seen as the \textit{fourth generation}. While the first and second generation mainly focuses on test execution, neglecting test design, the third generation separates test case definition from test-scripting. Although researches have investigated in extending the traditional capture-playback approach creating action-based, keyword-based, object-based or class-based approaches, every single one does require
+some sort of human interaction. Though, as motivated in~\cite{crawlajax}, fully automated model generation is not possible mainly
 due to DOM state changes during script execution. 
  
 
 \section{Resilience and Adaptiveness}
 One of the main challenges in Web application testing are changing Webpages. There are even categories of Websites which were build with the intention of regular
-changes such as News sites. Whereas on the fronted side updates seem to be in real time, news sites are usually realized as a Content Management System. 
+changes such as News sites. Whereas on the frontend side updates seem to be in real time, news sites are usually realized as a Content Management System (CMS). 
 CMS systems ease the development of high adaptive Web applications, though requiring more sophisticated testing approaches. This section gives a brief overview 
 of different approaches satisfying this requirement. 
 \subsection{Robust XPath}
-M. Abe and M. Hori proposed an approach\cite{robust-xpath} of stable XPath\cite{xpath} expressions which resist structural changes.
-XPath expressions ease the navigation through hierarchical content such as XML\cite{xml}, (X)HTML\cite{html}, DOM\cite{dom} and any other tree-like structures.
+\citeauthor{robust-xpath} proposed an approach~\cite{robust-xpath} of stable XPath~\cite{xpath} expressions which resist structural changes.
+XPath expressions ease the navigation through hierarchical content such as XML~\cite{xml}, (X)HTML~\cite{html}, DOM~\cite{dom} and any other tree-like structures.
 XPath defines several navigation axes though they all can be qualified as forward axes and reverse axes. While the former navigates downwards,
-the latter navigates upwards. Web applications test tools use XPath expressions for the identification of nodes. While in principle these tools can deal with HTML
+the latter navigates upwards. Web application test tools use XPath expressions for the identification of nodes. While in principle these tools can deal with HTML
 nodes and DOM nodes, we recommend using tools working with the latter, thus offering the possibility to navigate through dynamic content. 
-However, tools often produce XPath expressions which break after a slightly changing document structure. \\
-M. Abe and M. Hori identified three types of XPath expressions: \textit{single-node pointing}, \textit{alternative predicate} and \textit{relative addressing}. 
+However, tools often produce XPath expressions which break after a slightly changing document structure. 
+
+\citeauthor{robust-xpath} identified three types of XPath expressions: \textit{single-node pointing}, \textit{alternative predicate} and \textit{relative addressing}. 
 Single-node pointing expressions identify, as the name suggests, exactly one single node. It will not point to any other nodes. Alternative predicate expressions
 use a predicate expression to limit the number of result nodes. They do not necessarily have to return a single node, instead returning a set of nodes.
-Relative addressing expressions use a fixed anchor node which will not change frequently.\\
-An example of a simple html code is given in listing  \ref{lst:html}.
+Relative addressing expressions use a fixed anchor node which will not change frequently.
+
+An example of a simple HTML code is given in Listing  \ref{lst:html}.
 \begin{lstlisting}[language=HTML, caption={HTML code listing used as source for XPath expressions},label=lst:html]
 <html>
 	<body>
@@ -404,23 +429,24 @@ Table \ref{tab:xPath-expressions} shows an example for each type of XPath expres
 The most promising approach is relative addressing because M. Abe and M. Hori observed that links are unlikely to change. 
 Though some Websites heavily rely on numeric links such as \texttt{http://orf.at/stories/2192632/} which are likely to change after a short period of time. Here URL rewriting 
 is used to create human readable, bookmarkable links. Another problem are links with different link text. Sometimes links are written with leading \texttt{http://} and other times not. However a slightly modified XPath expression solves the problem, e.g.
-\texttt{//a[contains(./@href, www.volkswagen.at)]} instead of \texttt{//a[@href='http://www.volkswagen.at']}.\\
-Robust XPath expressions are simple, yet effective way to survive structural changes. However, the authors noted that their empirical study was to small and the XPath expressions were tightly coupled to the provided HTML document to generalize their conclusions to all kinds of HTML documents.  
+\texttt{//a[contains(./@href, www.volkswagen.at)]} instead of \texttt{//a[@href='http://www.volkswagen.at']}.
+
+Robust XPath expressions are a simple, yet effective way to survive structural changes. However, the authors noted that their empirical study was to small and the XPath expressions were tightly coupled to the provided HTML document to generalize their conclusions to all kinds of HTML documents.  
 \subsection{Tree Similarity}
 Until recently researchers have spent a lot of effort in algorithms all addressing Tree Similarity due to different areas of application such as string similarity for spell checkers,
 XML document analysis and text search algorithms to name just a few.
 \paragraph{Tree edit distance} ~\\
-Back in 1977 S. Selkow presented in his paper\cite{tree-editing-distance} an approach of measuring tree similarity. He observed that a tree can be transformed into another, yet similar tree 
+Back in 1977 \citeauthor{tree-editing-distance} presented in his paper~\cite{tree-editing-distance} an approach of measuring tree similarity. He observed that a tree can be transformed into another, yet similar tree 
 using three operations:
 \begin{itemize}
 	\item \textbf{Insert}\\
 	Inserts a new child node at a certain position, substitute former child nodes with the node to be inserted and insert former child nodes as children of the new inserted node.  
 	\item \textbf{Delete}\\
-	Removes a node from a tree and connects it's children directly to it's parent node.
-	\item \textbf{Rename(Update)}\\
+	Removes a node from a tree and connects its children directly to its parent node.
+	\item \textbf{Rename (Update)}\\
 	Changes the label of a node, preserving the overall structure of the tree.
 \end{itemize}
-The above informal definition implies that insert and delete are inverse edit operations (i.e. insert undoes delete and vice versa). Figure \ref{fig:tree_operations} illustrates all three operations (adapted from \cite{tree-edit-distance-survey}). 
+The above informal definition implies that insert and delete are inverse edit operations (i.e. insert undoes delete and vice versa). Figure \ref{fig:tree_operations} illustrates all three operations (adapted from~\cite{tree-edit-distance-survey}). 
 \begin{figure}[H]
         \centering
         \begin{subfigure}[h!]{0.3\textwidth}
@@ -445,13 +471,15 @@ The above informal definition implies that insert and delete are inverse edit op
         \caption{Illustration of tree-edit operations}\label{fig:tree_operations}
 \end{figure}
 The tree edit distance, formally defined as $\delta(T_1,T_2)$ whereas $T_1$ and $T_2$ are labelled trees,
-is the minimal number of operations necessary for transforming $T_1$ into $T_2$: min\{$\gamma(S)|S$ is a sequence of operations transforming $T_1$ into $T_2$\}. $\gamma(S)$ is a function, measuring the cost of a sequence of operations $S=s_1,...,s_k$. \\
-Although a large number of algorithms have been developed in the past (e.g. Tai\cite{tai} introduced the first algorithm with non exponential time complexity), there are faster, yet more complex solutions to the domain of tree similarity. 
+is the minimal number of operations necessary for transforming $T_1$ into $T_2$: min\{$\gamma(S)|S$ is a sequence of operations transforming $T_1$ into $T_2$\}. $\gamma(S)$ is a function, measuring the cost of a sequence of operations $S=s_1,...,s_k$. 
+
+Although a large number of algorithms have been developed in the past (e.g.~\citet{tai} introduced the first algorithm with non exponential time complexity), there are faster, yet more complex solutions to the domain of tree similarity. 
 
 \paragraph{Longest common subsequence} ~\\
 Instead of viewing tree similarity as a sequence of operations, these paragraph introduces algorithms which are based on finding
-the the longest common subsequence of linked nodes. 
-Yang\cite{yang} introduced an algorithm addressing the similarity between two code fragments. H. Wang and Y. Zhang\cite{simple-tree-matching} followed a similar approach in context of Web data extraction.\\
+the longest common subsequence of linked nodes. 
+~\citet{yang} introduced an algorithm addressing the similarity between two code fragments. ~\citet{simple-tree-matching} followed a similar approach in context of Web data extraction.
+
 Algorithm \ref{lst:simple-tree} shows the function \textit{SimpleTreeMatching(A,B)} which takes two trees \textit{A},\textit{B} and returns the number of the longest continuous sequence of connected nodes.\\ 
 \\
 \begin{algorithm}[H]
@@ -476,15 +504,17 @@ Algorithm \ref{lst:simple-tree} shows the function \textit{SimpleTreeMatching(A,
 \caption{SimpleTreeMatching(A,B)\label{lst:simple-tree}}
 \end{algorithm}
 \vspace{\baselineskip}
-As \cite{yang} mentioned, two nodes are considered identical if and only if they contain identical symbols. For simplicity
+As~\cite{yang} mentioned, two nodes are considered identical if and only if they contain identical symbols. For simplicity
 node symbols are limited to letters of the English alphabet. However every other content is imaginable, for instance HTML-tags
-as illustrated in \cite{simple-tree-matching}. A more appropriate equality criteria is tag \textit{and} attribute equality. 
-In some cases the above criteria might be too restrictive, thus opening a new area area of research for extending the above algorithm.
+as illustrated in~\cite{simple-tree-matching}. A more appropriate equality criteria is tag \textit{and} attribute equality. 
+In some cases the above criteria might be too restrictive, thus opening a new area of research for extending the above algorithm.
 One approach would be an extension, taking attribute similarity and tag similarity into account because existing
-ones\cite{simple-tree-matching} consider the latter one only.\\
+ones~\cite{simple-tree-matching} consider the latter one only.
+
 Another drawback of the above algorithm is that two trees do not match even if they differ only in the root node. 
-Therefore Yang\cite{yang} proposed an extension of the \textit{SimpleTreeMatching} algorithm, loosening the constraint of matching
-nodes. Two nodes match if they are \textit{comparable} or \textit{identical}: Every identical node is also comparable but not the other way round. \\
+Therefore~\citet{yang} proposed an extension of the \textit{SimpleTreeMatching} algorithm, loosening the constraint of matching
+nodes. Two nodes match if they are \textit{comparable} or \textit{identical}: Every identical node is also comparable but not the other way round. 
+
 Due to the wide area of application a lot of effort has been spent into algorithms addressing tree similarity.
 It would go far beyond the scope of this thesis to discuss all aspects of tree similarity. 
 
@@ -492,37 +522,39 @@ It would go far beyond the scope of this thesis to discuss all aspects of tree s
 There are plenty of other research work addressing different areas, though some ideas seem also appropriate for adaptive functional
 Web application testing. This subsection outlines some of them and briefly discusses further research approaches using ideas from
 below.\\\\
-As Y. Yang and H. Zhang\cite{page-analysis_visual} motivated in their paper tools relying on the structural organization of a
-Website are not feasible due to the common misuses of the HTML markup language. Thus the W3C Consortium suggest Cascade Style Sheets(CSS\cite{css3}) to facilitate a clear separating between content and appearance. Event though the Document Object Model(DOM\cite{dom})
+As~\citet{page-analysis_visual} motivated in their paper tools relying on the structural organization of a
+Website are not feasible due to the common misuses of the HTML markup language. Thus the W3C Consortium suggests Cascading Style Sheets (CSS~\cite{css3}) to facilitate a clear separating between content and appearance. Event though the Document Object Model (DOM~\cite{dom})
 seems a better choice, combining both in a consistent way, there are similar looking, but differently organized Websites.  
-As a remedy to this L. Wenyin et al.\cite{phishing-visual} first proposed an approach, measuring the visual similarity of a Website.
+As a remedy to this~\citet{phishing-visual} first proposed an approach, measuring the visual similarity of a Website.
 They measure visual similarity in three metrics: \textit{block level similarity}, \textit{layout similarity} and
-\textit{style similarity}. To calculate these metrics, a Webpage is divided into salient blocks. Whereas block level similarity is defined as "the weighted average of all pairs of matched blocks", layout similarity is defined as "the ratio of the weighted number
-of matched blocks to the number of total blocks". The latter metric is can be calculated using the histogram of the style feature. 
-A. Fu et al.\cite{emd} proposed a different approach measuring similarity based on visual cues. A Webpage is first converted into 
+\textit{style similarity}. To calculate these metrics, a Webpage is divided into salient blocks. Whereas block level similarity is defined as \enquote{the weighted average of all pairs of matched blocks}, layout similarity is defined as \enquote{the ratio of the weighted number
+of matched blocks to the number of total blocks}. The latter metric can be calculated using the histogram of the style feature. 
+~\citet{emd} proposed a different approach measuring similarity based on visual cues. A Webpage is first converted into 
 images bringing the advantage of structural independence, meaning that their approach is not limited to HTML Webpages. Then the
-\textit{Earth Mover's Distance}\cite{emd-def} is calculated, providing a universal, yet comparable metric. \\
-X. Gu et al.\cite{understanding-web-adaption} proposed a fundamentally different approach facilitating Web content adaption. 
+\textit{Earth Mover's Distance}~\cite{emd-def} is calculated, providing a universal, yet comparable metric. 
+
+~\citet{understanding-web-adaption} proposed a fundamentally different approach facilitating Web content adaption. 
 Their paper is based on the knowledge of the objective of Web publishers, inferring that Web authors first decides \textit{what}
 to present and \textit{then} decides \textit{how} to present the information. Unlike former content adaption
-technologies\cite{function-object-model, adaptive-html-delivery} an automatic top-down, tag-tree independent approach is presented,
+technologies~\cite{function-object-model, adaptive-html-delivery} an automatic top-down, tag-tree independent approach is presented,
 removing the limitation of a physical realization format. The essential part is the \textit{Web Content Structure} which is
 formally defined as a triple $\Omega=(O,\Phi, \delta)$. Whereas $O$ is a finite set of identifiable objects, $\Phi$ describes
 possible separators and $\delta$ defines the relationship of every object pair. In other words $\Omega$ is a tag-tree independent 
-abstraction of the visual representation of a Web page. In addition X. Gu et al.\cite{understanding-web-adaption} provide
+abstraction of the visual representation of a Webpage. In addition~\citet{understanding-web-adaption} provide
 an algorithm to automatically infer the Web Content Structure from any Webpage. Therefore the detection process recursively 
 divides a Webpage into smaller blocks and then merges similar ones via visual similarity. \\\\
-To sum up, even though there are many different approaches addressing changing Webpages in isolation, every one has it's strength
-and weaknesses. Yet, not a single approach have been applied to functional Web testing, offering a wide area of research.
+To sum up, even though there are many different approaches addressing changing Webpages in isolation, every one has its strength
+and weaknesses. Yet, not a single approach has been applied to functional Web testing, offering a wide area of research.
 
-\section*{Conclusion}
+\section{Conclusion}
 \addcontentsline{toc}{section}{Conclusion}
 Since the growing trend towards more complex Web applications replacing traditional Desktop applications, functional tests checking
 the functioning of an application became even more important. Although functional tests deserve their existence in Web applications, 
 the majority of today’s Websites do not include them. This emphasizes the fact that no best practice for Web application
 testing has been established yet. This is especially true for AJAX Web applications where application states can not be predicted due
 to DOM changes during script execution. Even functional testing for static Websites is challenging because of, amongst other reasons, 
-regular changes to the Website.\\ 
+regular changes to the Website.
+ 
 Nevertheless a few approaches aiming to solve the problem of regular changes have emerged, though they all were
 proposed in a different context than functional Web application testing. In our opinion functional testing through model checking,
 inferring an abstract model of the behaviour of a Web application, seems most promising for commercial use, though a complete
@@ -532,7 +564,7 @@ mapping will not be possible.
 \newpage
 \addcontentsline{toc}{section}{References}
 \bibliography{literature}
-\bibliographystyle{plain}
+\bibliographystyle{plainnat}
 
 \end{document}
 
